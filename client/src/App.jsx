@@ -1,51 +1,24 @@
 import React from 'react';
-import {
-  ChakraProvider,
-  // Box,
-  // Text,
-  // Link,
-  // VStack,
-  // Code,
-  // Grid,
-  // theme,
-  extendTheme
-} from '@chakra-ui/react';
-import { Router, Routes, Route } from "react-router-dom"
-import { ColorModeSwitcher } from './ColorModeSwitcher';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import { Logo } from './Logo';
 import Home from "./pages/Home"
+import NavHeader from './components/NavHeader';
+import { Box } from '@chakra-ui/react';
 
-const config = {
-  useSystemColourMode: true
-}
-
-const colors = {
-  brand: {
-    dark: '#27272A',
-    blue: '#0369A1',
-    orange: '#FED7AA',
-    light: '#F4F4F5',
-  },
-}
-
-const theme = extendTheme({ config, colors })
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
       <Router>
-        <Routes>  
-          <Route 
-            path="/" 
-            element={<Home />} 
-          />
-          {/* <Route 
-            path="/profiles/:profileId" 
-            element={<Profile />} 
-          /> */}
-        </Routes>
+        <Box w="100vw" h="100vh" bg="brand.light">
+          <NavHeader />
+          <Routes>  
+            <Route 
+              path="/" 
+              element={<Home />} 
+            />
+          </Routes>
+        </Box>
       </Router>
-    </ChakraProvider>
   );
 }
 
