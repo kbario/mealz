@@ -1,14 +1,20 @@
-import NavHeader from "../components/NavHeader"
+import RepoCard from "../components/RepoCard";
 import { Flex, Heading, Text, Button } from "@chakra-ui/react"
-import { Link } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
+
+import Auth from '../utils/auth';
 
 function Home() {
+
+  if (!Auth.loggedIn()) {
+    return <Navigate to="/signup" />;
+  }
+
+
     return (
       <>
-        <Flex h="70vh" direction="column" p="5" align={"center"} justify="center" gap="10">
-          <Heading align={"center"}>An Effortless Professional Github Portfolio</Heading>
-          <Text align={"center"}>create a customised dashboard of your github repos to humble brag and let work find you.</Text>
-          <Link to="/dashboard"><Button variant="fillBtn">Get Started</Button></Link>
+        <Flex h="100%" w="100%" direction="column" p="5" align="center" justify="center" gap="10">
+          <RepoCard></RepoCard>
         </Flex>
       </>
     )

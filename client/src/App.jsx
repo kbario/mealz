@@ -1,23 +1,35 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import { Logo } from './Logo';
-import Home from "./pages/Home"
+import Landing from "./pages/Landing"
 import NavHeader from './components/NavHeader';
-import { Box } from '@chakra-ui/react';
+import Signup from './pages/Signup';
+import Home from './pages/Home';
+import { Box, Flex } from '@chakra-ui/react';
 
 
 function App() {
   return (
       <Router>
-        <Box w="100vw" h="100vh" bg="brand.light">
+        <Flex w="100vw" h="100vh" bg="brand.light" direction={"column"}>
           <NavHeader />
-          <Routes>  
-            <Route 
-              path="/" 
-              element={<Home />} 
-            />
-          </Routes>
-        </Box>
+          <Box flexGrow={1}>
+            <Routes>  
+              <Route 
+                path="/" 
+                element={<Landing />} 
+              />
+              <Route 
+                path="/home" 
+                element={<Home />} 
+              />
+              <Route 
+                path="/signup" 
+                element={<Signup />} 
+              />
+            </Routes>
+          </Box>
+        </Flex>
       </Router>
   );
 }

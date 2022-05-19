@@ -16,6 +16,8 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
+    "graphql-request": "^4.2.0",
+    "jwt-decode": "^3.1.2",
     "nodejs-web-scraper": "^6.1.0"
   }
 }

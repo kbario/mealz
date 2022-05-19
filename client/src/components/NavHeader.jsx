@@ -7,8 +7,8 @@ function NavHeader() {
     const theme = useTheme();
 
     return (
-    <Flex w="100%" h="20" align="center" bg="brand.light" p="4">
-        <Heading >MyRepos</Heading>
+    <Flex w="100%" align="center" bg="brand.light" p="6">
+        <Heading>mealz</Heading>
         <Spacer />
         <Menu>
             {({ isOpen }) => (
@@ -17,7 +17,9 @@ function NavHeader() {
                     {isOpen ? <CloseIcon /> : <HamburgerIcon />}
                 </MenuButton>
                 <MenuList>
-                    <MenuItem>Download</MenuItem>
+                    <MenuItem>recipes</MenuItem>
+                    <MenuItem>plan</MenuItem>
+                    <MenuItem>list</MenuItem>
                     <MenuItem><ColorModeSwitcher /></MenuItem>
                     <MenuItem onClick={() => alert('Kagebunshin')}>
                         Create a Copy

@@ -24,6 +24,13 @@ const components = {
       },
     },
   },
+  Heading: {
+    variants: {
+      repocard: {
+        fontSize: 'xl',
+      },
+    },
+  },
 };
 
 const theme = extendTheme({ config, colors, components });
