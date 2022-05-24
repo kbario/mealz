@@ -23,9 +23,16 @@ export const QUERY_SINGLE_PROFILE = gql`
 export const QUERY_ME = gql`
   query me {
     me {
-      _id
       name
-      skills
+      recipes {
+        _id
+        name
+        serves
+        from
+        cookTime
+        cuisine
+        numberOfIngredients
+      }
     }
   }
 `;

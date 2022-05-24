@@ -7,7 +7,9 @@ const typeDefs = gql`
     email: String
     password: String
     recipes: [Recipe]
+    days: [Day]
     createdAt: String
+    numberOfRecipes: Int
   }
 
   input Ingredients {
@@ -27,9 +29,18 @@ const typeDefs = gql`
   type Recipe {
     _id: ID
     name: String
+    description: String
     serves: String
     ingredients: [Ingredient]
     from: String
+    cookTime: Int
+    cuisine: String
+    numberOfIngredients: Int
+  }
+
+  input Cards {
+    name: String
+    meals: [ID]
   }
 
   type Card {
@@ -40,7 +51,7 @@ const typeDefs = gql`
 
   type Day {
     _id: String
-    String: String
+    date: String
     cards: [Card]
   }
 
@@ -50,7 +61,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    # users: [User]!
+    users: [User]!
     # user(profile: ID!): Profile
     # Because we have the context functionality in place to check a JWT and decode its data, we can use a query that will always find and return the logged in user's data
     me: User
@@ -61,10 +72,14 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addRecipe(
       name: String!
+      description: String!
       serves: Int!
       ingredients: [Ingredients]!
-      from: String
+      from: String!
+      cuisine: String!
+      cookTime: Int!
     ): User
+    addDay(date: String!, cards: [Cards]!): User
     removeRecipe(recipeId: String!): User
     removeUser: User
 

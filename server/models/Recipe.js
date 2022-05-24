@@ -30,6 +30,16 @@ const recipeSchema = new Schema({
   from: {
     type: String,
   },
+  cookTime: {
+    type: Number,
+  },
+  cuisine: {
+    type: String,
+  },
+});
+
+recipeSchema.virtual("numberOfIngredients").get(function () {
+  return this.ingredients.length;
 });
 
 const Recipe = model("Recipe", recipeSchema);

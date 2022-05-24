@@ -25,6 +25,12 @@ const userSchema = new Schema(
         ref: "Recipe",
       },
     ],
+    days: [
+      {
+        type: SchemaTypes.ObjectId,
+        ref: "Day",
+      },
+    ],
     createdAt: {
       type: Date,
       default: Date.now,
@@ -52,6 +58,10 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
+
+userSchema.virtual("numberOfRecipes").get(function () {
+  return this.recipes.length;
+});
 
 const User = model("User", userSchema);
 

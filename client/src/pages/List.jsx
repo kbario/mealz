@@ -7,7 +7,7 @@ import NavHeader from '../components/NavHeader';
 import Auth from '../utils/auth';
 import { QUERY_ME } from '../utils/queries';
 
-function Home() {
+function List() {
   const { data, loading, error } = useQuery(QUERY_ME);
 
   if (!Auth.loggedIn()) {
@@ -40,4 +40,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default List;

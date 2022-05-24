@@ -1,23 +1,32 @@
 const { Schema, model, SchemaTypes } = require("mongoose");
 
-const cardSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  meals: [
-    {
-      type: SchemaTypes.ObjectId,
-      ref: "Recipe",
+const cardSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
     },
-  ],
-});
+    meals: [
+      {
+        type: SchemaTypes.ObjectId,
+        ref: "Recipe",
+      },
+    ],
+  },
+  {
+    toJSON: {
+      virtuals: true,
+    },
+    id: false,
+  }
+);
 
 const daySchema = new Schema(
   {
     date: {
-      type: Date,
+      type: String,
       required: true,
+      unique: true,
     },
     cards: [cardSchema],
   },

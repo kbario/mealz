@@ -1,12 +1,13 @@
 const { AuthenticationError } = require("apollo-server-express");
+const { Error } = require("mongoose");
 const { User, Recipe, Day } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    // users: async () => {
-    //   return User.find();
-    // },
+    users: async () => {
+      return User.find();
+    },
 
     // user: async (parent, { profileId }) => {
     //   return User.findOne({ _id: profileId });
@@ -42,9 +43,20 @@ const resolvers = {
       return { token, user };
     },
 
-    addRecipe: async (parent, { name, serves, ingredients, from }, context) => {
+    addRecipe: async (
+      parent,
+      { name, serves, ingredients, from, cookTime, cuisine },
+      context
+    ) => {
       if (context.user) {
-        const recipe = await Recipe.create({ name, serves, ingredients, from });
+        const recipe = await Recipe.create({
+          name,
+          serves,
+          ingredients,
+          from,
+          cuisine,
+          cookTime,
+        });
         const user = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $addToSet: { recipes: recipe._id } },
@@ -53,14 +65,33 @@ const resolvers = {
         return user.populate("recipes");
       }
     },
+    addDay: async (parent, { date, cards }, context) => {
+      if (context.user) {
+        try {
+        } catch (error) {}
+        const day = await Day.create({ date, cards });
+
+        const user = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { days: day._id } },
+          { new: true }
+        );
+        return user.populate(["recipes", "days"]);
+      }
+    },
 
     removeRecipe: async (parent, { recipeId }, context) => {
       if (context.user) {
-        return await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { recipes: recipeId } },
-          { new: true }
-        ).populate("recipes");
+        const recipe = await Recipe.findByIdAndDelete(recipeId);
+        if (recipe.ok) {
+          return await User.findOneAndUpdate(
+            { _id: context.user._id },
+            { $pull: { recipes: recipeId } },
+            { new: true }
+          ).populate("recipes");
+        } else {
+          return Error("Could not delete recipe");
+        }
       }
     },
 
