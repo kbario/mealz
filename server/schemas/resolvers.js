@@ -1,6 +1,6 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { Error } = require("mongoose");
-const { User, Recipe, Day } = require("../models");
+const { User, Recipe, Card } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
@@ -15,7 +15,9 @@ const resolvers = {
 
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("recipes");
+        return User.findOne({ _id: context.user._id })
+          .populate(["recipes", "cards"])
+          .populate({ path: "cards", populate: "meals" });
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -45,38 +47,47 @@ const resolvers = {
 
     addRecipe: async (
       parent,
-      { name, serves, ingredients, from, cookTime, cuisine },
+      { name, description, serves, ingredients, from, cookTime, cuisine },
       context
     ) => {
       if (context.user) {
-        const recipe = await Recipe.create({
-          name,
-          serves,
-          ingredients,
-          from,
-          cuisine,
-          cookTime,
-        });
-        const user = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { recipes: recipe._id } },
-          { new: true }
-        );
-        return user.populate("recipes");
+        try {
+          const recipe = await Recipe.create({
+            name,
+            description,
+            serves,
+            ingredients,
+            from,
+            cuisine,
+            cookTime,
+          });
+          const user = await User.findOneAndUpdate(
+            { _id: context.user._id },
+            { $addToSet: { recipes: recipe._id } },
+            { new: true }
+          );
+          return user.populate(["recipes", "cards"]);
+          // .populate({ path: "cards", populate: "meals" });
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
-    addDay: async (parent, { date, cards }, context) => {
+    addCard: async (parent, { name, date, meals }, context) => {
       if (context.user) {
         try {
-        } catch (error) {}
-        const day = await Day.create({ date, cards });
+          const card = await Card.create({ name, date, meals });
 
-        const user = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { days: day._id } },
-          { new: true }
-        );
-        return user.populate(["recipes", "days"]);
+          const user = await User.findOneAndUpdate(
+            { _id: context.user._id },
+            { $addToSet: { cards: card._id } },
+            { new: true }
+          );
+          return user.populate(["recipes", "cards"]);
+          // .populate({ path: "cards", populate: "meals" });
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
 
@@ -88,7 +99,8 @@ const resolvers = {
             { _id: context.user._id },
             { $pull: { recipes: recipeId } },
             { new: true }
-          ).populate("recipes");
+          ).populate(["recipes", "cards"]);
+          // .populate({ path: "cards", populate: "meals" });
         } else {
           return Error("Could not delete recipe");
         }

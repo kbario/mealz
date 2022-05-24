@@ -6,6 +6,10 @@ const cardSchema = new Schema(
       type: String,
       required: true,
     },
+    date: {
+      type: String,
+      required: true,
+    },
     meals: [
       {
         type: SchemaTypes.ObjectId,
@@ -21,23 +25,6 @@ const cardSchema = new Schema(
   }
 );
 
-const daySchema = new Schema(
-  {
-    date: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    cards: [cardSchema],
-  },
-  {
-    toJSON: {
-      virtuals: true,
-    },
-    id: false,
-  }
-);
+const Card = model("Card", cardSchema);
 
-const Day = model("Day", daySchema);
-
-module.exports = Day;
+module.exports = Card;

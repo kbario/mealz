@@ -22,6 +22,10 @@ const recipeSchema = new Schema({
     required: true,
     trim: true,
   },
+  description: {
+    type: String,
+    trim: true,
+  },
   serves: {
     type: Number,
     required: true,

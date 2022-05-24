@@ -17,6 +17,7 @@ import {
 import { Navigate, Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { fancyMonth, fancyDay } from '../utils/dates';
+import { AddIcon } from '@chakra-ui/icons';
 
 import NavHeader from '../components/NavHeader';
 
@@ -37,6 +38,8 @@ function Plan() {
   if (error) {
     return <div>Error {error.message}</div>;
   }
+
+  
 
   const dates = [...Array(35).keys()].map((item, idx) => {
     const d = new Date();
@@ -73,7 +76,17 @@ function Plan() {
                       <br />
                       {date.numbers}
                     </Td>
-                    <Td></Td>
+                    <Td pos="relative">
+                      <Button
+                        rounded="sm"
+                        position="absolute"
+                        bottom="2"
+                        right="2"
+                        onClick={() => }
+                      >
+                        <AddIcon />
+                      </Button>
+                    </Td>
                   </Tr>
                 </Tbody>
               ))}

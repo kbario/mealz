@@ -7,7 +7,7 @@ const typeDefs = gql`
     email: String
     password: String
     recipes: [Recipe]
-    days: [Day]
+    cards: [Card]
     createdAt: String
     numberOfRecipes: Int
   }
@@ -38,21 +38,11 @@ const typeDefs = gql`
     numberOfIngredients: Int
   }
 
-  input Cards {
-    name: String
-    meals: [ID]
-  }
-
   type Card {
     _id: String
     name: String
-    meals: [Recipe]
-  }
-
-  type Day {
-    _id: String
     date: String
-    cards: [Card]
+    meals: [Recipe]
   }
 
   type Auth {
@@ -79,7 +69,7 @@ const typeDefs = gql`
       cuisine: String!
       cookTime: Int!
     ): User
-    addDay(date: String!, cards: [Cards]!): User
+    addCard(name: String!, date: String!, meals: [ID]!): User
     removeRecipe(recipeId: String!): User
     removeUser: User
 

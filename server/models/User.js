@@ -25,10 +25,10 @@ const userSchema = new Schema(
         ref: "Recipe",
       },
     ],
-    days: [
+    cards: [
       {
         type: SchemaTypes.ObjectId,
-        ref: "Day",
+        ref: "Card",
       },
     ],
     createdAt: {
