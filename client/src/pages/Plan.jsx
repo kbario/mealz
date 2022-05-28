@@ -13,11 +13,22 @@ import {
   Td,
   TableCaption,
   TableContainer,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Input,
+  Select,
+  Options,
 } from '@chakra-ui/react';
 import { Navigate, Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { fancyMonth, fancyDay } from '../utils/dates';
-import { AddIcon } from '@chakra-ui/icons';
+import { PlanButtons } from '../components/ButtonnModal';
 
 import NavHeader from '../components/NavHeader';
 
@@ -38,8 +49,6 @@ function Plan() {
   if (error) {
     return <div>Error {error.message}</div>;
   }
-
-  
 
   const dates = [...Array(35).keys()].map((item, idx) => {
     const d = new Date();
@@ -77,15 +86,10 @@ function Plan() {
                       {date.numbers}
                     </Td>
                     <Td pos="relative">
-                      <Button
-                        rounded="sm"
-                        position="absolute"
-                        bottom="2"
-                        right="2"
-                        onClick={() => }
-                      >
-                        <AddIcon />
-                      </Button>
+                      <PlanButtons
+                        date={date.numbers}
+                        recipes={data.me.recipes}
+                      />
                     </Td>
                   </Tr>
                 </Tbody>
@@ -106,163 +110,3 @@ function Plan() {
 }
 
 export default Plan;
-
-// import React, { useState } from 'react';
-// import FullCalendar, { formatDate } from '@fullcalendar/react';
-// import dayGridPlugin from '@fullcalendar/daygrid';
-// import timeGridPlugin from '@fullcalendar/timegrid';
-// import interactionPlugin from '@fullcalendar/interaction';
-// // import { INITIAL_EVENTS, createEventId } from './event-utils';
-
-// function Plan() {
-//   const [state, setState] = useState({
-//     weekendsVisible: true,
-//     currentEvents: [],
-//   });
-
-//   return (
-//     <div className="demo-app">
-//       {renderSidebar()}
-//       <div className="demo-app-main">
-//         <FullCalendar
-//           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-//           headerToolbar={{
-//             left: 'prev,next today',
-//             center: 'title',
-//             right: 'dayGridMonth,timeGridWeek,timeGridDay',
-//           }}
-//           initialView="dayGridMonth"
-//           editable={true}
-//           selectable={true}
-//           selectMirror={true}
-//           dayMaxEvents={true}
-//           weekends={state.weekendsVisible}
-//           initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
-//           select={e => handleDateSelect(e)}
-//           eventContent={e => renderEventContent(e)} // custom render function
-//           eventClick={e => handleEventClick(e)}
-//           eventsSet={e => handleEvents(e)} // called after events are initialized/added/changed/removed
-//           /* you can update a remote database when these fire:
-//             eventAdd={function(){}}
-//             eventChange={function(){}}
-//             eventRemove={function(){}}
-//             */
-//         />
-//       </div>
-//     </div>
-//   );
-
-//   function renderSidebar() {
-//     return (
-//       <div className="demo-app-sidebar">
-//         <div className="demo-app-sidebar-section">
-//           <h2>Instructions</h2>
-//           <ul>
-//             <li>Select dates and you will be prompted to create a new event</li>
-//             <li>Drag, drop, and resize events</li>
-//             <li>Click an event to delete it</li>
-//           </ul>
-//         </div>
-//         <div className="demo-app-sidebar-section">
-//           <label>
-//             <input
-//               type="checkbox"
-//               checked={state.weekendsVisible}
-//               onChange={() => handleWeekendsToggle()}
-//             ></input>
-//             toggle weekends
-//           </label>
-//         </div>
-//         <div className="demo-app-sidebar-section">
-//           <h2>All Events ({state.currentEvents.length})</h2>
-//           <ul>{state.currentEvents.map(e => renderSidebarEvent(e))}</ul>
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   function handleWeekendsToggle() {
-//     setState({
-//       weekendsVisible: !state.weekendsVisible,
-//     });
-//   }
-
-//   function handleDateSelect(selectInfo) {
-//     let title = prompt('Please enter a new title for your event');
-//     let calendarApi = selectInfo.view.calendar;
-
-//     calendarApi.unselect(); // clear date selection
-
-//     if (title) {
-//       calendarApi.addEvent({
-//         id: createEventId(),
-//         title,
-//         start: selectInfo.startStr,
-//         end: selectInfo.endStr,
-//         allDay: selectInfo.allDay,
-//       });
-//     }
-//   }
-
-//   function handleEventClick(clickInfo) {
-//     if (
-//       window.confirm(
-//         `Are you sure you want to delete the event '${clickInfo.event.title}'`
-//       )
-//     ) {
-//       clickInfo.event.remove();
-//     }
-//   }
-
-//   function handleEvents(events) {
-//     setState({
-//       currentEvents: events,
-//     });
-//   }
-// }
-
-// export default Plan;
-
-// function renderEventContent(eventInfo) {
-//   return (
-//     <>
-//       <b>{eventInfo.timeText}</b>
-//       <i>{eventInfo.event.title}</i>
-//     </>
-//   );
-// }
-
-// function renderSidebarEvent(event) {
-//   return (
-//     <li key={event.id}>
-//       <b>
-//         {formatDate(event.start, {
-//           year: 'numeric',
-//           month: 'short',
-//           day: 'numeric',
-//         })}
-//       </b>
-//       <i>{event.title}</i>
-//     </li>
-//   );
-// }
-
-// let eventGuid = 0;
-// let todayStr = new Date().toISOString().replace(/T.*$/, ''); // YYYY-MM-DD of today
-
-// const INITIAL_EVENTS = [
-//   {
-//     id: createEventId(),
-//     title: 'All-day event',
-//     start: todayStr,
-//   },
-//   {
-//     id: createEventId(),
-//     title: 'Timed event',
-//     start: todayStr + 'T12:00:00',
-//   },
-// ];
-
-// function createEventId() {
-//   return String(eventGuid++);
-// }
