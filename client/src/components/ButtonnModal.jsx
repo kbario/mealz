@@ -11,13 +11,19 @@ import {
   Select,
   ModalFooter,
   ModalCloseButton,
+  Tag,
+  Flex,
+  TagLabel,
+  TagCloseButton,
+  TagRightIcon,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { add } from '../icons/icons';
+import { add, close } from '../icons/icons';
 
 export function PlanButtons({ date, day, recipes }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isRecipeIn, setIsRecipeIn] = useState();
+  const [isRecipeIn, setIsRecipeIn] = useState([]);
+
   return (
     <>
       <Button
@@ -39,22 +45,61 @@ export function PlanButtons({ date, day, recipes }) {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Select>
-              <option value="breaky">breaky</option>
-              <option value="lunch">lunch</option>
-              <option value="dinner">dinner</option>
-              <option value="dessert">dessert</option>
-              <option value="snack">snack</option>
-            </Select>
-            <Select>
-              {recipes.map(recipe => {
-                return (
-                  <option key={recipe._id} value={recipe._id}>
-                    {recipe.name}
-                  </option>
-                );
-              })}
-            </Select>
+            <Flex direction="column" gap="3">
+              <Select>
+                <option value="breaky">breaky</option>
+                <option value="lunch">lunch</option>
+                <option value="dinner">dinner</option>
+                <option value="dessert">dessert</option>
+                <option value="snack">snack</option>
+              </Select>
+              <Flex wrap="wrap" gap="1">
+                {recipes
+                  .filter(recipe => isRecipeIn.includes(recipe._id))
+                  .map(recipe => {
+                    return (
+                      <Tag
+                        key={recipe._id}
+                        value={recipe._id}
+                        size="lg"
+                        backgroundColor="brand.blue"
+                        textColor="white"
+                      >
+                        <TagLabel>{recipe.name}</TagLabel>
+                        <TagCloseButton
+                          onClick={() => {
+                            setIsRecipeIn(
+                              isRecipeIn.filter(id => id !== recipe._id)
+                            );
+                          }}
+                        />
+                      </Tag>
+                    );
+                  })}
+              </Flex>
+              <Flex wrap="wrap" gap="1">
+                {recipes
+                  .filter(recipe => !isRecipeIn.includes(recipe._id))
+                  .map(recipe => {
+                    return (
+                      <Tag key={recipe._id} value={recipe._id} size="lg">
+                        <TagLabel>{recipe.name}</TagLabel>
+
+                        <TagRightIcon
+                          _hover={{ cursor: 'pointer', background: 'grey' }}
+                          viewBox="0 0 48 48 "
+                          rounded="full"
+                          onClick={() => {
+                            setIsRecipeIn([...isRecipeIn, recipe._id]);
+                          }}
+                        >
+                          {add}
+                        </TagRightIcon>
+                      </Tag>
+                    );
+                  })}
+              </Flex>
+            </Flex>
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>Close</Button>
