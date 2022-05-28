@@ -62,12 +62,12 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addRecipe(
       name: String!
-      description: String!
+      description: String
       serves: Int!
       ingredients: [Ingredients]!
-      from: String!
-      cuisine: String!
-      cookTime: Int!
+      from: String
+      cuisine: String
+      cookTime: Int
     ): User
     addCard(name: String!, date: String!, meals: [ID]!): User
     removeRecipe(recipeId: String!): User

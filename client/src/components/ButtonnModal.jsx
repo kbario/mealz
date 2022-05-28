@@ -132,7 +132,7 @@ export function RecipeButton({ rand }) {
               <TabPanels>
                 <TabPanel>
                   <Flex direction="column" gap="3">
-                    <FormControl>
+                    <FormControl isRequired>
                       <FormLabel htmlFor="recipe-name">name</FormLabel>
                       <Input
                         name="recipe-name"
@@ -145,6 +145,29 @@ export function RecipeButton({ rand }) {
                           });
                         }}
                       />
+                    </FormControl>
+                    <FormControl isRequired>
+                      <FormLabel htmlFor="recipe-serves">serves</FormLabel>
+                      <NumberInput
+                        min={1}
+                        allowMouseWheel
+                        value={recipeState.serves}
+                      >
+                        <NumberInputField
+                          id="amount"
+                          value={recipeState.serves}
+                          onChange={e => {
+                            recipeDispatch({
+                              type: UPDATE_RECIPE_SERVES,
+                              payload: e.target.value,
+                            });
+                          }}
+                        />
+                        <NumberInputStepper>
+                          <NumberIncrementStepper />
+                          <NumberDecrementStepper />
+                        </NumberInputStepper>
+                      </NumberInput>
                     </FormControl>
                     <FormControl>
                       <FormLabel htmlFor="recipe-desc">description</FormLabel>
@@ -188,29 +211,6 @@ export function RecipeButton({ rand }) {
                           onChange={e => {
                             recipeDispatch({
                               type: UPDATE_RECIPE_COOKTIME,
-                              payload: e.target.value,
-                            });
-                          }}
-                        />
-                        <NumberInputStepper>
-                          <NumberIncrementStepper />
-                          <NumberDecrementStepper />
-                        </NumberInputStepper>
-                      </NumberInput>
-                    </FormControl>
-                    <FormControl>
-                      <FormLabel htmlFor="recipe-serves">serves</FormLabel>
-                      <NumberInput
-                        min={1}
-                        allowMouseWheel
-                        value={recipeState.serves}
-                      >
-                        <NumberInputField
-                          id="amount"
-                          value={recipeState.serves}
-                          onChange={e => {
-                            recipeDispatch({
-                              type: UPDATE_RECIPE_SERVES,
                               payload: e.target.value,
                             });
                           }}
