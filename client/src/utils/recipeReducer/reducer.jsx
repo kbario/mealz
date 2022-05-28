@@ -13,6 +13,10 @@ import {
   initRecipeState,
   SET_INGREDIENT_TO_ZERO,
   SET_RECIPE_TO_ZERO,
+  ADD_INSTRUCTION_INPUT,
+  UPDATE_INSTRUCTION,
+  REMOVE_INSTRUCTION,
+  SET_INSTRUCTION_TO_ZERO,
 } from './actions';
 
 export default function recipeReducer(state, action) {
@@ -56,12 +60,12 @@ export default function recipeReducer(state, action) {
     case ADD_INGREDIENT_INPUT: {
       return {
         ...state,
-        ingredients: [...state.ingredients, initRecipeState],
+        ingredients: [...state.ingredients, initRecipeState.ingredients],
       };
     }
     case UPDATE_INGREDIENT_AMOUNT: {
       const ingreeds = state.ingredients;
-      ingreeds[action.payload.idx].a = action.payload.value;
+      ingreeds[action.payload.idx].amount = parseInt(action.payload.value);
 
       return {
         ...state,
@@ -70,7 +74,7 @@ export default function recipeReducer(state, action) {
     }
     case UPDATE_INGREDIENT_UNIT: {
       const ingreeds = state.ingredients;
-      ingreeds[action.payload.idx].u = action.payload.value;
+      ingreeds[action.payload.idx].unit = action.payload.value;
 
       return {
         ...state,
@@ -79,7 +83,7 @@ export default function recipeReducer(state, action) {
     }
     case UPDATE_INGREDIENT_NAME: {
       const ingreeds = state.ingredients;
-      ingreeds[action.payload.idx].i = action.payload.value;
+      ingreeds[action.payload.idx].name = action.payload.value;
 
       return {
         ...state,
@@ -97,7 +101,36 @@ export default function recipeReducer(state, action) {
     case SET_INGREDIENT_TO_ZERO: {
       return {
         ...state,
-        ingredients: [{ a: '', u: '', i: '' }],
+        ingredients: initRecipeState.ingredients,
+      };
+    }
+    case ADD_INSTRUCTION_INPUT: {
+      return {
+        ...state,
+        instructions: [...state.instructions, initRecipeState.instructions[0]],
+      };
+    }
+    case UPDATE_INSTRUCTION: {
+      const instructs = state.instructions;
+      instructs[action.payload.idx] = action.payload.value;
+
+      return {
+        ...state,
+        instructions: instructs,
+      };
+    }
+    case REMOVE_INSTRUCTION: {
+      return {
+        ...state,
+        instructions: state.instructions.filter(
+          (instruct, idx) => action.payload !== idx
+        ),
+      };
+    }
+    case SET_INSTRUCTION_TO_ZERO: {
+      return {
+        ...state,
+        instructions: [''],
       };
     }
     case SET_RECIPE_TO_ZERO: {

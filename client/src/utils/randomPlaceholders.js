@@ -40,3 +40,12 @@ export const randomIngreeds = [
     i: 'baking soda',
   },
 ];
+export const randomInstructions = [
+  'add the garlic, onions, and oil and fry until golden brown',
+  'whip the egg whites until they create soft peaks',
+  'sear the steak over a high heat for one minute on each side',
+  'leave buns to rise until double the original size',
+  'add all dry ingredients to a large bowl and mix',
+  'like the spoon and bowl to save washing up',
+  'section the apples into sixths and then in half again',
+];

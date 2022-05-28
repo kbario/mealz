@@ -71,7 +71,11 @@ function Plan() {
                       {date.numbers}
                     </Td>
                     <Td pos="relative">
-                      <PlanButtons date={date.numbers} recipes={recipes} />
+                      <PlanButtons
+                        date={date.numbers}
+                        day={date.fancy}
+                        recipes={recipes}
+                      />
                     </Td>
                   </Tr>
                 </Tbody>

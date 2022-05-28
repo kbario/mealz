@@ -26,11 +26,19 @@ const components = {
   },
   Heading: {
     variants: {
-      repocard: {
+      RecipeCard: {
         fontSize: 'xl',
       },
       lightHeading: {
         color: 'brand.blue',
+      },
+    },
+  },
+  Tag: {
+    variants: {
+      'recipe-card': {
+        boxShadow: '0 0 2px 2px #efdfde',
+        bg: 'brand.blue',
       },
     },
   },

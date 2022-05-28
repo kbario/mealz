@@ -25,20 +25,25 @@ const recipeSchema = new Schema({
   description: {
     type: String,
     trim: true,
+    required: false,
   },
   serves: {
     type: Number,
     required: true,
   },
   ingredients: [ingredientSchema],
+  instructions: [String],
   from: {
     type: String,
+    required: false,
   },
   cookTime: {
     type: Number,
+    required: false,
   },
   cuisine: {
     type: String,
+    required: false,
   },
 });
 

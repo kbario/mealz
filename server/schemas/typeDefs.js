@@ -13,7 +13,6 @@ const typeDefs = gql`
   }
 
   input Ingredients {
-    _id: ID
     name: String
     amount: Int
     unit: String
@@ -32,6 +31,7 @@ const typeDefs = gql`
     description: String
     serves: String
     ingredients: [Ingredient]
+    instructions: [String]
     from: String
     cookTime: Int
     cuisine: String
@@ -65,6 +65,7 @@ const typeDefs = gql`
       description: String
       serves: Int!
       ingredients: [Ingredients]!
+      instructions: [String]!
       from: String
       cuisine: String
       cookTime: Int

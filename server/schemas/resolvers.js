@@ -47,7 +47,16 @@ const resolvers = {
 
     addRecipe: async (
       parent,
-      { name, description, serves, ingredients, from, cookTime, cuisine },
+      {
+        name,
+        description,
+        serves,
+        ingredients,
+        instructions,
+        from,
+        cookTime,
+        cuisine,
+      },
       context
     ) => {
       if (!context.user)
@@ -58,17 +67,20 @@ const resolvers = {
           name,
           serves,
           ingredients,
+          instructions,
           description,
           from,
           cuisine,
           cookTime,
         });
+        console.log(recipe);
         return await User.findOneAndUpdate(
           { _id: context.user._id },
           { $addToSet: { recipes: recipe._id } },
           { new: true }
-        ).populate(["recipes", "cards"]);
-        // .populate({ path: "cards", populate: "meals" });
+        )
+          .populate(["recipes", "cards"])
+          .populate({ path: "cards", populate: "meals" });
       } catch (error) {
         console.log(error);
       }

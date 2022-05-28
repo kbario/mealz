@@ -22,6 +22,7 @@ export const ADD_RECIPE = gql`
     $description: String
     $serves: Int!
     $ingredients: [Ingredients]!
+    $instructions: [String]!
     $from: String
     $cuisine: String
     $cookTime: Int
@@ -31,6 +32,7 @@ export const ADD_RECIPE = gql`
       description: $description
       serves: $serves
       ingredients: $ingredients
+      instructions: $instructions
       from: $from
       cuisine: $cuisine
       cookTime: $cookTime
@@ -40,10 +42,14 @@ export const ADD_RECIPE = gql`
         name
         description
         serves
-        ingredients
+        ingredients {
+          name
+        }
+        instructions
         from
         cuisine
         cookTime
+        numberOfIngredients
       }
     }
   }

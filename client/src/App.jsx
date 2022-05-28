@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Logo } from './Logo';
 import Landing from './pages/Landing';
-import NavHeader from './components/NavHeader';
 import Signup from './pages/Signup';
 import Home from './pages/Home';
 import Recipes from './pages/Recipes';
@@ -20,6 +19,11 @@ import { setContext } from '@apollo/client/link/context';
 
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme';
+
+// import { createClient } from 'pexels';
+// const pexelClient = createClient(
+//   '563492ad6f9170000100000107700a901a4b4d518b1da95c306b2930'
+// );
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -48,7 +52,13 @@ function App() {
     <ApolloProvider client={client}>
       <ChakraProvider theme={theme}>
         <Router>
-          <Flex w="100vw" h="100vh" bg="brand.light" direction={'column'}>
+          <Flex
+            w="100vw"
+            h="100vh"
+            bg="brand.light"
+            direction={'column'}
+            overflow="hidden"
+          >
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/home" element={<Home />} />

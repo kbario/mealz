@@ -12,28 +12,33 @@ import {
   ModalFooter,
   ModalCloseButton,
 } from '@chakra-ui/react';
+import { useState } from 'react';
 import { add } from '../icons/icons';
 
-export function PlanButtons({ date, recipes }) {
+export function PlanButtons({ date, day, recipes }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isRecipeIn, setIsRecipeIn] = useState();
   return (
     <>
       <Button
-        rounded="sm"
         position="absolute"
         bottom="2"
         right="2"
+        boxSize="12"
+        p="0"
+        rounded="full"
         onClick={onOpen}
       >
-        <Icon>{add}</Icon>
+        {add}
       </Button>
       <Modal onClose={onClose} isOpen={isOpen} isCentered motionPreset="scale">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>
+            plan for {day} the {date}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Input value={date} readOnly />
             <Select>
               <option value="breaky">breaky</option>
               <option value="lunch">lunch</option>

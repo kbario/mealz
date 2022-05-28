@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
-import { Flex, Heading } from '@chakra-ui/react';
+import { Flex, Grid, Heading, useMediaQuery } from '@chakra-ui/react';
 
 import RecipeCard from '../components/RecipeCard';
 import NavHeader from '../components/NavHeader';
@@ -9,18 +9,17 @@ import RecipeModal from '../components/RecipeModal';
 
 import { QUERY_ME } from '../utils/queries';
 
-import { randomIngreeds } from '../utils/randomIngreeds';
-
 import Auth from '../utils/auth';
+import { useEffect, useState } from 'react';
 
-function Recipes() {
+function Recipes({ pexelClient }) {
   const { data, loading, error } = useQuery(QUERY_ME);
+  const [isNotPhone] = useMediaQuery('(min-width: 500px)');
+  const { recipes } = data?.me || {};
 
   if (!Auth.loggedIn()) {
     return <Navigate to="/signup" />;
   }
-
-  const { recipes } = data?.me || {};
 
   if (loading) {
     return <div>Loading...</div>;
@@ -35,22 +34,37 @@ function Recipes() {
       <Heading variant="lightHeading" paddingLeft="6">
         recipes
       </Heading>
-      <Flex
+      <Grid
         h="grow"
-        w="100%"
-        direction="column"
+        templateColumns={[
+          '1fr',
+          'repeat(2,1fr)',
+          'repeat(3,1fr)',
+          'repeat(3,1fr)',
+          'repeat(4,1fr)',
+        ]}
+        direction={isNotPhone ? 'row' : 'column'}
         p="6"
-        align="center"
-        justify="center"
-        gap="10"
+        paddingTop={0}
+        gap="3"
+        overflow="scroll"
       >
         {recipes !== null
-          ? recipes.map(recipe => {
-              return <RecipeCard recipe={recipe} key={recipe._id} />;
+          ? recipes.map((recipe, idx) => {
+              return (
+                <RecipeCard
+                  recipe={recipe}
+                  key={recipe._id}
+                  isNotPhone={isNotPhone}
+                />
+              );
             })
           : 'you have no recipes'}
-      </Flex>
-      <RecipeModal rand={randomIngreeds[Math.round(Math.random() * 8)]} />
+      </Grid>
+      <RecipeModal
+        rand={Math.round(Math.random() * 8)}
+        isNotPhone={isNotPhone}
+      />
     </Flex>
   );
 }
