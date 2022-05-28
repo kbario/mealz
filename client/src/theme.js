@@ -29,6 +29,9 @@ const components = {
       repocard: {
         fontSize: 'xl',
       },
+      lightHeading: {
+        color: 'brand.blue',
+      },
     },
   },
 };
