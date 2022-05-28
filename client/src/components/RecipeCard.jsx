@@ -34,23 +34,27 @@ function RecipeCard({ recipe }) {
       <Heading>{name.toLowerCase()}</Heading>
       <Flex w="100%">
         <Tag>
-          <TagLeftIcon boxSize="5">{globe}</TagLeftIcon>
-          <TagLabel>{cuisine.toUpperCase()}</TagLabel>
-        </Tag>
-        <Tag>
           <TagLeftIcon boxSize="5">{people}</TagLeftIcon>
           <TagLabel>{serves}</TagLabel>
         </Tag>
-        <Tag>
-          <TagLeftIcon boxSize="5">{clock}</TagLeftIcon>
-          <TagLabel>{cookTime}</TagLabel>
-        </Tag>
+        {cuisine && (
+          <Tag>
+            <TagLeftIcon boxSize="5">{globe}</TagLeftIcon>
+            <TagLabel>{cuisine.toUpperCase()}</TagLabel>
+          </Tag>
+        )}
+        {cookTime && (
+          <Tag>
+            <TagLeftIcon boxSize="5">{clock}</TagLeftIcon>
+            <TagLabel>{cookTime}</TagLabel>
+          </Tag>
+        )}
         <Tag>
           <TagLeftIcon boxSize="5">{bag}</TagLeftIcon>
           <TagLabel>{numberOfIngredients}</TagLabel>
         </Tag>
       </Flex>
-      <Text>{description}</Text>
+      {description && <Text>{description}</Text>}
     </Flex>
   );
 }

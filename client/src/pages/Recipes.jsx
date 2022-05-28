@@ -1,12 +1,15 @@
-import { Flex, Heading, Text, Button } from '@chakra-ui/react';
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
+
+import { Flex, Heading } from '@chakra-ui/react';
+
 import RecipeCard from '../components/RecipeCard';
 import NavHeader from '../components/NavHeader';
-import { RecipeButton } from '../components/ButtonnModal';
-import { randomIngreeds } from '../utils/randomIngreeds';
+import RecipeModal from '../components/RecipeModal';
 
 import { QUERY_ME } from '../utils/queries';
+
+import { randomIngreeds } from '../utils/randomIngreeds';
 
 import Auth from '../utils/auth';
 
@@ -17,7 +20,8 @@ function Recipes() {
     return <Navigate to="/signup" />;
   }
 
-  const { name, recipes } = data?.me || {};
+  const { recipes } = data?.me || {};
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -46,7 +50,7 @@ function Recipes() {
             })
           : 'you have no recipes'}
       </Flex>
-      <RecipeButton rand={randomIngreeds[Math.round(Math.random() * 8)]} />
+      <RecipeModal rand={randomIngreeds[Math.round(Math.random() * 8)]} />
     </Flex>
   );
 }

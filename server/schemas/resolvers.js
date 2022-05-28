@@ -50,27 +50,27 @@ const resolvers = {
       { name, description, serves, ingredients, from, cookTime, cuisine },
       context
     ) => {
-      if (context.user) {
-        try {
-          const recipe = await Recipe.create({
-            name,
-            description,
-            serves,
-            ingredients,
-            from,
-            cuisine,
-            cookTime,
-          });
-          const user = await User.findOneAndUpdate(
-            { _id: context.user._id },
-            { $addToSet: { recipes: recipe._id } },
-            { new: true }
-          );
-          return user.populate(["recipes", "cards"]);
-          // .populate({ path: "cards", populate: "meals" });
-        } catch (error) {
-          console.log(error);
-        }
+      if (!context.user)
+        throw new AuthenticationError("You're not logged in...");
+
+      try {
+        const recipe = await Recipe.create({
+          name,
+          serves,
+          ingredients,
+          description,
+          from,
+          cuisine,
+          cookTime,
+        });
+        return await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { recipes: recipe._id } },
+          { new: true }
+        ).populate(["recipes", "cards"]);
+        // .populate({ path: "cards", populate: "meals" });
+      } catch (error) {
+        console.log(error);
       }
     },
     addCard: async (parent, { name, date, meals }, context) => {

@@ -1,33 +1,17 @@
 import {
   Flex,
   Heading,
-  Text,
-  Button,
-  Box,
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
-  useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Input,
-  Select,
-  Options,
 } from '@chakra-ui/react';
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { fancyMonth, fancyDay } from '../utils/dates';
+import { fancyDay } from '../utils/dates';
 import { PlanButtons } from '../components/ButtonnModal';
 
 import NavHeader from '../components/NavHeader';
@@ -42,7 +26,8 @@ function Plan() {
     return <Navigate to="/signup" />;
   }
 
-  const { name, recipes } = data?.me || {};
+  const { recipes } = data?.me || {};
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -86,10 +71,7 @@ function Plan() {
                       {date.numbers}
                     </Td>
                     <Td pos="relative">
-                      <PlanButtons
-                        date={date.numbers}
-                        recipes={data.me.recipes}
-                      />
+                      <PlanButtons date={date.numbers} recipes={recipes} />
                     </Td>
                   </Tr>
                 </Tbody>

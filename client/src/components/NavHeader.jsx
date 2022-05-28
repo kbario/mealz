@@ -1,5 +1,5 @@
 import {
-  useTheme,
+  // useTheme,
   Flex,
   Spacer,
   Button,
@@ -7,7 +7,6 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  ScaleFade,
   Heading,
   Avatar,
 } from '@chakra-ui/react';
@@ -36,7 +35,7 @@ function NavHeader({ me }) {
                 <Link to="/plan">plan</Link>
               </MenuItem>
               <MenuItem>list</MenuItem>
-              <MenuItem>
+              <MenuItem as="div">
                 <ColorModeSwitcher />
               </MenuItem>
               <MenuItem onClick={() => alert('Kagebunshin')}>
