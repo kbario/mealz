@@ -1,7 +1,6 @@
 import {
   Button,
   useDisclosure,
-  Icon,
   Modal,
   ModalOverlay,
   ModalBody,
@@ -15,7 +14,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { add, close } from '../icons/icons';
+import { add } from '../icons/icons';
 import PlanPopover from '../components/PlanPopover';
 import { ADD_CARD } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
@@ -25,7 +24,7 @@ export function PlanModal({ date, day, recipes, isPhone }) {
   const [isRecipeIn, setIsRecipeIn] = useState([]);
   const [mealName, setMealName] = useState('breaky');
   const [serving, setServing] = useState([]);
-  const [addCard, { loading, error }] = useMutation(ADD_CARD);
+  const [addCard] = useMutation(ADD_CARD);
 
   async function handleSave(e, date) {
     e.preventDefault();
@@ -38,7 +37,7 @@ export function PlanModal({ date, day, recipes, isPhone }) {
 
     try {
       // console.log(recipeState);
-      const { data } = await addCard({
+      await addCard({
         variables: {
           name: mealName,
           date,

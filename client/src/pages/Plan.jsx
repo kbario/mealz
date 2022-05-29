@@ -1,6 +1,5 @@
 import {
   Flex,
-  Heading,
   useMediaQuery,
   Tabs,
   TabList,
@@ -8,7 +7,6 @@ import {
   Tab,
   TabPanel,
   Box,
-  Text,
 } from '@chakra-ui/react';
 import { Navigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
@@ -68,16 +66,16 @@ function Plan() {
           flexDirection="column"
         >
           <TabList>
-            <Tab _focus="none">last</Tab>
-            <Tab _focus="none">this</Tab>
-            <Tab _focus="none">next</Tab>
-            <Tab _focus="none">next</Tab>
-            <Tab _focus="none">next</Tab>
+            <Tab>last</Tab>
+            <Tab>this</Tab>
+            <Tab>next</Tab>
+            <Tab>next</Tab>
+            <Tab>next</Tab>
           </TabList>
 
           <TabPanels display="flex" flexGrow={1}>
             {myArr.map(index => (
-              <TabPanel display="flex" flexGrow={1}>
+              <TabPanel key={index} display="flex" flexGrow={1}>
                 <Flex
                   display="flex"
                   direction={isNotPhone ? 'row' : 'column'}
@@ -107,6 +105,7 @@ function Plan() {
                           py={!isNotPhone ? '2' : '0'}
                           borderLeft={idx !== 0 && isNotPhone ? '1px' : '0px'}
                           borderTop={idx !== 0 && !isNotPhone ? '1px' : '0px'}
+                          key={idx}
                         >
                           <Box>
                             {date.fancy}
@@ -115,8 +114,8 @@ function Plan() {
                           </Box>
                           {cards
                             .filter(card => card.date === date.numbers)
-                            .map(card => {
-                              return <CardCard card={card} />;
+                            .map((card, idx) => {
+                              return <CardCard card={card} key={idx} />;
                             })}
 
                           <PlanModal

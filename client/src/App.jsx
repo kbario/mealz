@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Logo } from './Logo';
+// import { Logo } from './Logo';
 import Landing from './pages/Landing';
 import Signup from './pages/Signup';
 import Home from './pages/Home';
 import Recipes from './pages/Recipes';
 import Plan from './pages/Plan';
 import List from './pages/List';
-import { Box, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 
 import {
   ApolloClient,

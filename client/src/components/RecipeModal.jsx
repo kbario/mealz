@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 import {
   Button,
   useDisclosure,
-  Icon,
+  // Icon,
   Modal,
   ModalOverlay,
   ModalBody,
@@ -94,7 +94,7 @@ function RecipeModal({ rand, isNotPhone }) {
 
     try {
       // console.log(recipeState);
-      const { data } = await addRecipe({
+      await addRecipe({
         variables: {
           name,
           serves: parseInt(serves),
@@ -141,9 +141,9 @@ function RecipeModal({ rand, isNotPhone }) {
           <ModalBody>
             <Tabs variant="line" isFitted minH="md">
               <TabList>
-                <Tab _focus="none">meta</Tab>
-                <Tab _focus="none">ingreeds</Tab>
-                <Tab _focus="none">instructs</Tab>
+                <Tab>meta</Tab>
+                <Tab>ingreeds</Tab>
+                <Tab>instructs</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
@@ -169,7 +169,6 @@ function RecipeModal({ rand, isNotPhone }) {
                           name="recipeServes"
                           min={1}
                           allowMouseWheel
-                          value={recipeState.serves}
                         >
                           <NumberInputField
                             id="amount"

@@ -1,16 +1,13 @@
 import {
   Flex,
-  Heading,
   Text,
-  Button,
   Checkbox,
   CheckboxGroup,
   FormControl,
   FormLabel,
-  Input,
   Select,
 } from '@chakra-ui/react';
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { fancyDay } from '../utils/dates';
 import { useEffect, useState } from 'react';
@@ -25,6 +22,7 @@ function List() {
   const [from, setFrom] = useState(7);
   const [to, setTo] = useState(14);
   const [filteredDates, setFilteredDates] = useState();
+  let finalIngreeds;
 
   const dates = [...Array(35).keys()].map((item, idx) => {
     const d = new Date();
@@ -41,13 +39,11 @@ function List() {
 
   useEffect(() => {
     setFilteredDates(dates.slice(from, to + 1));
-  }, [from, to]);
+  }, [from, to, dates]);
 
   if (!Auth.loggedIn()) {
     return <Navigate to="/signup" />;
   }
-
-  const { cards } = data?.me || {};
 
   if (loading) {
     return <div>Loading...</div>;
@@ -56,53 +52,58 @@ function List() {
     return <div>Error {error.message}</div>;
   }
 
-  const filteredCards = cards.filter(card => {
-    const truth = filteredDates.map(date => date.numbers === card.date);
-    return truth.includes(true);
-  });
+  if (data.me.cards && filteredDates) {
+    const filteredCards = data.me.cards.filter(card => {
+      const truth = filteredDates.map(date => date.numbers === card.date);
+      return truth.includes(true);
+    });
 
-  const ingreeds = filteredCards.reduce((acc, idv, idx, arr) => {
-    idv.meals.forEach((meal, midx) =>
-      meal.ingredients.forEach(ingreed =>
+    const ingreeds = filteredCards.reduce((acc, idv, idx, arr) => {
+      idv.meals.forEach((meal, midx) =>
+        meal.ingredients.forEach(ingreed =>
+          acc.push({
+            ...ingreed,
+            serves: meal.serves,
+            serving: idv.serving[midx],
+          })
+        )
+      );
+      return acc;
+    }, []);
+
+    finalIngreeds = ingreeds.reduce((acc, idv, idx, arr) => {
+      const exists = acc.map(acc => acc.name === `${idv.unit} ${idv.name}`);
+      if (exists.includes(true)) {
+        acc[exists.indexOf(true)].amount =
+          acc[exists.indexOf(true)].amount +
+          parseInt(idv.amount) * (parseInt(idv.serving) / parseInt(idv.serves));
+      } else {
         acc.push({
-          ...ingreed,
-          serves: meal.serves,
-          serving: idv.serving[midx],
-        })
-      )
-    );
-    return acc;
-  }, []);
-
-  const finalIngreeds = ingreeds.reduce((acc, idv, idx, arr) => {
-    const exists = acc.map(acc => acc.name === `${idv.unit} ${idv.name}`);
-    if (exists.includes(true)) {
-      acc[exists.indexOf(true)].amount =
-        acc[exists.indexOf(true)].amount +
-        parseInt(idv.amount) * (parseInt(idv.serving) / parseInt(idv.serves));
-    } else {
-      acc.push({
-        name: `${idv.unit} ${idv.name}`,
-        amount:
-          parseInt(idv.amount) * (parseInt(idv.serving) / parseInt(idv.serves)),
-      });
-    }
-    return acc;
-  }, []);
+          name: `${idv.unit} ${idv.name}`,
+          amount:
+            parseInt(idv.amount) *
+            (parseInt(idv.serving) / parseInt(idv.serves)),
+        });
+      }
+      return acc;
+    }, []);
+  }
 
   return (
     <Flex w="100%" h="100%" direction="column">
       <NavHeader page={'list'} me={data?.me} />
       <Flex direction="column" flexGrow="1" p="6">
-        <CheckboxGroup>
-          {finalIngreeds.map(ingreeds => (
-            <Checkbox size="lg">
-              <Text>
-                {ingreeds.amount} {ingreeds.name}
-              </Text>
-            </Checkbox>
-          ))}
-        </CheckboxGroup>
+        {finalIngreeds && (
+          <CheckboxGroup>
+            {finalIngreeds.map((ingreeds, idx) => (
+              <Checkbox key={idx} size="lg">
+                <Text>
+                  {ingreeds.amount} {ingreeds.name}
+                </Text>
+              </Checkbox>
+            ))}
+          </CheckboxGroup>
+        )}
       </Flex>
       <Flex gap="5" p="6">
         <FormControl>
@@ -116,7 +117,7 @@ function List() {
           >
             {dates.map((date, idx) => {
               return (
-                <option value={idx} disabled={idx >= to}>
+                <option key={idx} value={idx} disabled={idx > to}>
                   {date.numbers} - {date.fancy}
                 </option>
               );
@@ -134,7 +135,7 @@ function List() {
           >
             {dates.map((date, idx) => {
               return (
-                <option value={idx} disabled={idx <= from}>
+                <option key={idx} value={idx} disabled={idx < from}>
                   {date.numbers} - {date.fancy}
                 </option>
               );

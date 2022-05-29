@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
-import { Flex, Grid, Heading, useMediaQuery } from '@chakra-ui/react';
+import { Flex, Grid, useMediaQuery } from '@chakra-ui/react';
 
 import RecipeCard from '../components/RecipeCard';
 import NavHeader from '../components/NavHeader';
@@ -10,9 +10,8 @@ import RecipeModal from '../components/RecipeModal';
 import { QUERY_ME } from '../utils/queries';
 
 import Auth from '../utils/auth';
-import { useEffect, useState } from 'react';
 
-function Recipes({ pexelClient }) {
+function Recipes() {
   const { data, loading, error } = useQuery(QUERY_ME);
   const [isNotPhone] = useMediaQuery('(min-width: 500px)');
   const { recipes } = data?.me || {};

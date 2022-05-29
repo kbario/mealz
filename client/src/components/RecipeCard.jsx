@@ -4,9 +4,7 @@ import {
   Tag,
   TagLabel,
   TagLeftIcon,
-  Spacer,
   Text,
-  Image,
   GridItem,
   Link,
 } from '@chakra-ui/react';

@@ -2,12 +2,9 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  PopoverHeader,
   PopoverBody,
-  PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
-  PopoverAnchor,
   Flex,
   Button,
   useDisclosure,
@@ -39,13 +36,12 @@ export function PlanPopover({
       onOpen={onOpen}
       onClose={onClose}
       closeOnBlur={true}
-      eventListeners="true"
+      eventListeners={true}
     >
       <PopoverTrigger>
         <Flex>
           <Button
             roundedRight="0"
-            _focus="none"
             backgroundColor={isChosen ? 'brand.blue' : 'auto'}
             color={isChosen ? 'white' : 'auto'}
           >
@@ -64,7 +60,6 @@ export function PlanPopover({
                   }
             }
             icon={isChosen ? close : add}
-            _focus="none"
             backgroundColor={isChosen ? 'brand.blue' : 'auto'}
             fill={isChosen ? 'white' : 'auto'}
           />
@@ -78,12 +73,7 @@ export function PlanPopover({
           {isChosen && (
             <FormControl>
               <FormLabel htmlFor="serving">for how many?</FormLabel>
-              <NumberInput
-                min={1}
-                allowMouseWheel
-                value={serving[index]}
-                setServing={setServing}
-              >
+              <NumberInput min={1} allowMouseWheel value={serving[index]}>
                 <NumberInputField
                   id="serving"
                   name="serving"

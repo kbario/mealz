@@ -1,5 +1,5 @@
-import { Flex, Heading, Text, Button } from '@chakra-ui/react';
-import { Navigate, Link } from 'react-router-dom';
+import { Flex, Heading } from '@chakra-ui/react';
+import { Navigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
 import NavHeader from '../components/NavHeader';
@@ -14,7 +14,7 @@ function Home() {
     return <Navigate to="/signup" />;
   }
 
-  const { name, recipes } = data?.me || {};
+  const { name } = data?.me || {};
   if (loading) {
     return <div>Loading...</div>;
   }
