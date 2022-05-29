@@ -17,7 +17,7 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_RECIPE = gql`
-  mutation AddRecipe(
+  mutation addRecipe(
     $name: String!
     $description: String
     $serves: Int!
@@ -51,6 +51,14 @@ export const ADD_RECIPE = gql`
         cookTime
         numberOfIngredients
       }
+    }
+  }
+`;
+
+export const ADD_CARD = gql`
+  mutation addCard($name: String!, $date: String!, $meals: [ID]!) {
+    addCard(name: $name, date: $date, meals: $meals) {
+      name
     }
   }
 `;

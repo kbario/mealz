@@ -32,6 +32,10 @@ const components = {
       lightHeading: {
         color: 'brand.blue',
       },
+      cardcardHeading: {
+        fontSize: 'lg',
+        color: 'brand.blue',
+      },
     },
   },
   Tag: {

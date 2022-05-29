@@ -8,13 +8,15 @@ import {
   Tab,
   TabPanel,
   Box,
+  Text,
 } from '@chakra-ui/react';
 import { Navigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { fancyDay } from '../utils/dates';
-import PlanModal from '../components/PlanModal';
 
+import PlanModal from '../components/PlanModal';
 import NavHeader from '../components/NavHeader';
+import CardCard from '../components/CardCard';
 
 import Auth from '../utils/auth';
 import { QUERY_ME } from '../utils/queries';
@@ -27,7 +29,7 @@ function Plan() {
     return <Navigate to="/signup" />;
   }
 
-  const { recipes } = data?.me || {};
+  const { recipes, cards } = data?.me || {};
 
   if (loading) {
     return <div>Loading...</div>;
@@ -93,24 +95,35 @@ function Plan() {
                         6 + 7 * index,
                       ].includes(idx);
                     })
-                    .map(date => {
+                    .map((date, idx) => {
                       return (
                         <Flex
                           direction={isNotPhone ? 'column' : 'row'}
-                          w={isNotPhone ? '100%' : 'auto'}
-                          h={isNotPhone ? '100%' : '100%'}
+                          w={isNotPhone ? '100%' : '1/7'}
+                          h={isNotPhone ? '1/7' : '100%'}
                           flexGrow={1}
                           position="relative"
+                          px={isNotPhone ? '2' : '0'}
+                          py={!isNotPhone ? '2' : '0'}
+                          borderLeft={idx !== 0 && isNotPhone ? '1px' : '0px'}
+                          borderTop={idx !== 0 && !isNotPhone ? '1px' : '0px'}
                         >
                           <Box>
                             {date.fancy}
                             <br />
                             {date.numbers}
                           </Box>
+                          {cards
+                            .filter(card => card.date === date.numbers)
+                            .map(card => {
+                              return <CardCard card={card} />;
+                            })}
+
                           <PlanModal
                             date={date.numbers}
                             day={date.fancy}
                             recipes={recipes}
+                            isPhone={!isNotPhone}
                           />
                         </Flex>
                       );

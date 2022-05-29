@@ -28,7 +28,12 @@ export function PlanPopover({ recipe, isRecipeIn, setIsRecipeIn, isChosen }) {
     >
       <PopoverTrigger>
         <Flex>
-          <Button roundedRight="0" _focus="none">
+          <Button
+            roundedRight="0"
+            _focus="none"
+            backgroundColor={isChosen ? 'brand.blue' : 'auto'}
+            color={isChosen ? 'white' : 'auto'}
+          >
             {recipe.name}
           </Button>
           <IconButton
@@ -44,6 +49,8 @@ export function PlanPopover({ recipe, isRecipeIn, setIsRecipeIn, isChosen }) {
             }
             icon={isChosen ? close : add}
             _focus="none"
+            backgroundColor={isChosen ? 'brand.blue' : 'auto'}
+            fill={isChosen ? 'white' : 'auto'}
           />
         </Flex>
       </PopoverTrigger>

@@ -30,10 +30,8 @@ function Recipes({ pexelClient }) {
 
   return (
     <Flex w="100%" h="100%" direction="column">
-      <NavHeader me={data?.me} />
-      <Heading variant="lightHeading" paddingLeft="6">
-        recipes
-      </Heading>
+      <NavHeader page={'recipes'} me={data?.me} />
+
       <Grid
         h="grow"
         templateColumns={[

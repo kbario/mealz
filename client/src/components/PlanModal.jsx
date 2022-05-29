@@ -7,25 +7,48 @@ import {
   ModalBody,
   ModalHeader,
   ModalContent,
-  Input,
   Select,
   ModalFooter,
   ModalCloseButton,
-  Tag,
   Flex,
-  TagLabel,
-  TagCloseButton,
-  TagRightIcon,
   Divider,
   Text,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { add, close } from '../icons/icons';
 import PlanPopover from '../components/PlanPopover';
+import { ADD_CARD } from '../utils/mutations';
+import { useMutation } from '@apollo/client';
 
-export function PlanModal({ date, day, recipes }) {
+export function PlanModal({ date, day, recipes, isPhone }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isRecipeIn, setIsRecipeIn] = useState([]);
+  const [mealName, setMealName] = useState('breaky');
+  const [addCard, { loading, error }] = useMutation(ADD_CARD);
+
+  async function handleSave(e, date) {
+    e.preventDefault();
+    if (
+      !(isRecipeIn instanceof Array) ||
+      isRecipeIn.length === 0 ||
+      mealName === ''
+    )
+      return;
+
+    try {
+      // console.log(recipeState);
+      const { data } = await addCard({
+        variables: {
+          name: mealName,
+          date,
+          meals: isRecipeIn,
+        },
+      });
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
     <>
@@ -40,7 +63,13 @@ export function PlanModal({ date, day, recipes }) {
       >
         {add}
       </Button>
-      <Modal onClose={onClose} isOpen={isOpen} isCentered motionPreset="scale">
+      <Modal
+        onClose={onClose}
+        isOpen={isOpen}
+        isCentered
+        motionPreset="scale"
+        size={isPhone ? 'xs' : 'lg'}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
@@ -49,7 +78,7 @@ export function PlanModal({ date, day, recipes }) {
           <ModalCloseButton />
           <ModalBody>
             <Flex direction="column" gap="3">
-              <Select>
+              <Select onChange={e => setMealName(e.target.value)}>
                 <option value="breaky">breaky</option>
                 <option value="lunch">lunch</option>
                 <option value="dinner">dinner</option>
@@ -57,7 +86,7 @@ export function PlanModal({ date, day, recipes }) {
                 <option value="snack">snack</option>
               </Select>
               <Text>chosen:</Text>
-              <Flex wrap="wrap" gap="1">
+              <Flex wrap="wrap" gap="1" maxH="40" overflow={'auto'}>
                 {recipes
                   .filter(recipe => isRecipeIn.includes(recipe._id))
                   .map(recipe => {
@@ -76,7 +105,7 @@ export function PlanModal({ date, day, recipes }) {
               </Flex>
               <Divider />
               <Text>choose from:</Text>
-              <Flex wrap="wrap" gap="1">
+              <Flex wrap="wrap" gap="1" maxH="40" overflow={'auto'}>
                 {recipes
                   .filter(recipe => !isRecipeIn.includes(recipe._id))
                   .map(recipe => {
@@ -94,7 +123,9 @@ export function PlanModal({ date, day, recipes }) {
             </Flex>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
+            <Button onClick={e => handleSave(e, date)}>save</Button>
+            <Button onClick={() => setIsRecipeIn([])}>reset</Button>
+            <Button onClick={onClose}>close</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

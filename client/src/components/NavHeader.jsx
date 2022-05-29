@@ -9,17 +9,21 @@ import {
   MenuItem,
   Heading,
   Avatar,
+  Icon,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import { Link } from 'react-router-dom';
 
-function NavHeader({ me }) {
+function NavHeader({ me, page }) {
   // const theme = useTheme();
 
   return (
     <Flex w="100%" align="center" bg="brand.light" p="6" pb="0">
-      <Heading>mealz</Heading>
+      <Heading variant={page ? 'lightHeading' : 'auto'}>
+        <Icon />
+        {page ? page : 'mealz'}
+      </Heading>
       <Spacer />
       <Menu>
         {({ isOpen }) => (

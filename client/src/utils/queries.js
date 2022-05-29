@@ -33,6 +33,14 @@ export const QUERY_ME = gql`
         cuisine
         numberOfIngredients
       }
+      cards {
+        _id
+        name
+        date
+        meals {
+          name
+        }
+      }
     }
   }
 `;
