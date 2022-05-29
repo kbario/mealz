@@ -14,6 +14,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { add } from '../icons/icons';
 import PlanPopover from '../components/PlanPopover';
 import { ADD_CARD } from '../utils/mutations';
@@ -45,7 +46,7 @@ export function PlanModal({ date, day, recipes, isPhone }) {
           meals: isRecipeIn,
         },
       });
-      window.location.reload();
+      <Navigate to={'/plan'} />;
     } catch (err) {
       console.error(err);
     }

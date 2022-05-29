@@ -21,6 +21,7 @@ import {
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 import NavHeader from '../components/NavHeader';
+import { Navigate } from 'react-router-dom';
 
 function Signup() {
   const [addUser, { userLoading, userError }] = useMutation(ADD_USER);
@@ -57,6 +58,7 @@ function Signup() {
 
       Auth.login(data.addUser.token);
       localStorage.setItem('hereBefore', true);
+      <Navigate to="/home" />;
     } catch (err) {
       console.error(err);
     }
@@ -71,6 +73,7 @@ function Signup() {
 
       localStorage.setItem('hereBefore', true);
       Auth.login(data.login.token);
+      <Navigate to="/home" />;
     } catch (err) {
       console.error(err);
     }
