@@ -39,7 +39,15 @@ export const QUERY_ME = gql`
         date
         meals {
           name
+          ingredients {
+            name
+            amount
+            unit
+          }
+          serves
         }
+        serving
+        date
       }
     }
   }
