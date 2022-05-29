@@ -14,14 +14,15 @@ import {
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import { Link } from 'react-router-dom';
+import { Logo } from '../icons/icons';
 
 function NavHeader({ me, page }) {
   // const theme = useTheme();
 
   return (
-    <Flex w="100%" align="center" bg="brand.light" p="6" pb="0">
+    <Flex w="100%" align="center" bg="brand.light" p="6" pb="0" gap="5">
+      <Icon as={Logo} />
       <Heading variant={page ? 'lightHeading' : 'auto'}>
-        <Icon />
         {page ? page : 'mealz'}
       </Heading>
       <Spacer />
@@ -52,7 +53,7 @@ function NavHeader({ me, page }) {
         )}
       </Menu>
       <Menu>
-        <MenuButton as={Avatar} name={me?.name}></MenuButton>
+        <MenuButton as={Avatar}></MenuButton>
         <MenuList>
           <MenuItem>signout</MenuItem>
         </MenuList>

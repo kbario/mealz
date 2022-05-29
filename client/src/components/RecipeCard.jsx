@@ -8,7 +8,7 @@ import {
   GridItem,
   Link,
 } from '@chakra-ui/react';
-import { globe, people, clock, bag } from '../icons/icons';
+import { globe, People, clock, bag } from '../icons/icons';
 
 function RecipeCard({ recipe }) {
   const {
@@ -37,7 +37,7 @@ function RecipeCard({ recipe }) {
         <Heading variant="RecipeCard">{name.toLowerCase()}</Heading>
         <Flex w="100%" gap="2" wrap="wrap">
           <Tag boxShadow="md">
-            <TagLeftIcon boxSize="5">{people}</TagLeftIcon>
+            <TagLeftIcon boxSize="5" as={People} />
             <TagLabel>{serves}</TagLabel>
           </Tag>
           {cuisine && (
