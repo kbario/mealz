@@ -1,18 +1,18 @@
 import {
   Flex,
   Heading,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
+  useMediaQuery,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Box,
 } from '@chakra-ui/react';
 import { Navigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { fancyDay } from '../utils/dates';
-import { PlanButtons } from '../components/ButtonnModal';
+import PlanModal from '../components/PlanModal';
 
 import NavHeader from '../components/NavHeader';
 
@@ -21,6 +21,7 @@ import { QUERY_ME } from '../utils/queries';
 
 function Plan() {
   const { data, loading, error } = useQuery(QUERY_ME);
+  const [isNotPhone] = useMediaQuery('(min-width: 500px)');
 
   if (!Auth.loggedIn()) {
     return <Navigate to="/signup" />;
@@ -48,48 +49,77 @@ function Plan() {
     return { uuu, fancy, numbers };
   });
 
+  const myArr = [0, 1, 2, 3, 4];
+
   return (
-    <Flex h="100%" w="100%" direction="column">
-      <NavHeader me={data?.me} />
-      <Flex grow={1} w="100%" direction="column" p="6" gap="3">
-        <Heading>plan</Heading>
-        <Flex rounded="sm" boxShadow="md" w="100%" h="100%">
-          <TableContainer w="100%">
-            <Table variant="simple" size="lg">
-              <Thead>
-                <Tr>
-                  <Th w="160px">day</Th>
-                  <Th>mealz</Th>
-                </Tr>
-              </Thead>
-              {dates.map(date => (
-                <Tbody key={date.uuu}>
-                  <Tr>
-                    <Td>
-                      {date.fancy}
-                      <br />
-                      {date.numbers}
-                    </Td>
-                    <Td pos="relative">
-                      <PlanButtons
-                        date={date.numbers}
-                        day={date.fancy}
-                        recipes={recipes}
-                      />
-                    </Td>
-                  </Tr>
-                </Tbody>
-              ))}
-              {/* <Tfoot>
-                <Tr>
-                  <Th>To convert</Th>
-                  <Th>into</Th>
-                  <Th isNumeric>multiply by</Th>
-                </Tr>
-              </Tfoot> */}
-            </Table>
-          </TableContainer>
-        </Flex>
+    <Flex h="full" w="full" direction="column">
+      <NavHeader page={'plan'} me={data?.me} />
+      <Flex grow={1} w="full" direction="column" p="6" gap="3">
+        <Tabs
+          isFitted
+          boxShadow="md"
+          rounded="md"
+          w="full"
+          h="full"
+          defaultIndex={1}
+          display="flex"
+          flexDirection="column"
+        >
+          <TabList>
+            <Tab _focus="none">last</Tab>
+            <Tab _focus="none">this</Tab>
+            <Tab _focus="none">next</Tab>
+            <Tab _focus="none">next</Tab>
+            <Tab _focus="none">next</Tab>
+          </TabList>
+
+          <TabPanels display="flex" flexGrow={1}>
+            {myArr.map(index => (
+              <TabPanel display="flex" flexGrow={1}>
+                <Flex
+                  display="flex"
+                  direction={isNotPhone ? 'row' : 'column'}
+                  flexGrow={1}
+                >
+                  {dates
+                    .filter((date, idx) => {
+                      return [
+                        0 + 7 * index,
+                        1 + 7 * index,
+                        2 + 7 * index,
+                        3 + 7 * index,
+                        4 + 7 * index,
+                        5 + 7 * index,
+                        6 + 7 * index,
+                      ].includes(idx);
+                    })
+                    .map(date => {
+                      return (
+                        <Flex
+                          direction={isNotPhone ? 'column' : 'row'}
+                          w={isNotPhone ? '100%' : 'auto'}
+                          h={isNotPhone ? '100%' : '100%'}
+                          flexGrow={1}
+                          position="relative"
+                        >
+                          <Box>
+                            {date.fancy}
+                            <br />
+                            {date.numbers}
+                          </Box>
+                          <PlanModal
+                            date={date.numbers}
+                            day={date.fancy}
+                            recipes={recipes}
+                          />
+                        </Flex>
+                      );
+                    })}
+                </Flex>
+              </TabPanel>
+            ))}
+          </TabPanels>
+        </Tabs>
       </Flex>
     </Flex>
   );

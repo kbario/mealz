@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { globe, people, clock, bag } from '../icons/icons';
 
-function RecipeCard({ recipe, image }) {
+function RecipeCard({ recipe }) {
   const {
     _id,
     name,

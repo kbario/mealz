@@ -16,11 +16,14 @@ import {
   TagLabel,
   TagCloseButton,
   TagRightIcon,
+  Divider,
+  Text,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { add, close } from '../icons/icons';
+import PlanPopover from '../components/PlanPopover';
 
-export function PlanButtons({ date, day, recipes }) {
+export function PlanModal({ date, day, recipes }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isRecipeIn, setIsRecipeIn] = useState([]);
 
@@ -53,49 +56,38 @@ export function PlanButtons({ date, day, recipes }) {
                 <option value="dessert">dessert</option>
                 <option value="snack">snack</option>
               </Select>
+              <Text>chosen:</Text>
               <Flex wrap="wrap" gap="1">
                 {recipes
                   .filter(recipe => isRecipeIn.includes(recipe._id))
                   .map(recipe => {
                     return (
-                      <Tag
+                      <PlanPopover
                         key={recipe._id}
-                        value={recipe._id}
-                        size="lg"
                         backgroundColor="brand.blue"
                         textColor="white"
-                      >
-                        <TagLabel>{recipe.name}</TagLabel>
-                        <TagCloseButton
-                          onClick={() => {
-                            setIsRecipeIn(
-                              isRecipeIn.filter(id => id !== recipe._id)
-                            );
-                          }}
-                        />
-                      </Tag>
+                        recipe={recipe}
+                        isRecipeIn={isRecipeIn}
+                        setIsRecipeIn={setIsRecipeIn}
+                        isChosen={true}
+                      />
                     );
                   })}
               </Flex>
+              <Divider />
+              <Text>choose from:</Text>
               <Flex wrap="wrap" gap="1">
                 {recipes
                   .filter(recipe => !isRecipeIn.includes(recipe._id))
                   .map(recipe => {
                     return (
-                      <Tag key={recipe._id} value={recipe._id} size="lg">
-                        <TagLabel>{recipe.name}</TagLabel>
-
-                        <TagRightIcon
-                          _hover={{ cursor: 'pointer', background: 'grey' }}
-                          viewBox="0 0 48 48 "
-                          rounded="full"
-                          onClick={() => {
-                            setIsRecipeIn([...isRecipeIn, recipe._id]);
-                          }}
-                        >
-                          {add}
-                        </TagRightIcon>
-                      </Tag>
+                      <PlanPopover
+                        key={recipe._id}
+                        recipe={recipe}
+                        isRecipeIn={isRecipeIn}
+                        setIsRecipeIn={setIsRecipeIn}
+                        isChosen={false}
+                      />
                     );
                   })}
               </Flex>
@@ -109,3 +101,5 @@ export function PlanButtons({ date, day, recipes }) {
     </>
   );
 }
+
+export default PlanModal;
