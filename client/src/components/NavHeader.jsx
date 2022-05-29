@@ -38,7 +38,9 @@ function NavHeader({ me, page }) {
               <MenuItem>
                 <Link to="/plan">plan</Link>
               </MenuItem>
-              <MenuItem>list</MenuItem>
+              <MenuItem>
+                <Link to="/list">list</Link>
+              </MenuItem>
               <MenuItem as="div">
                 <ColorModeSwitcher />
               </MenuItem>

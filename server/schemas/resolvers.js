@@ -85,10 +85,10 @@ const resolvers = {
         console.log(error);
       }
     },
-    addCard: async (parent, { name, date, meals }, context) => {
+    addCard: async (parent, { name, date, serving, meals }, context) => {
       if (context.user) {
         try {
-          const card = await Card.create({ name, date, meals });
+          const card = await Card.create({ name, date, serving, meals });
 
           const user = await User.findOneAndUpdate(
             { _id: context.user._id },

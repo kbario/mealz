@@ -10,6 +10,7 @@ const cardSchema = new Schema(
       type: String,
       required: true,
     },
+    serving: [{ type: Number, required: true }],
     meals: [
       {
         type: SchemaTypes.ObjectId,

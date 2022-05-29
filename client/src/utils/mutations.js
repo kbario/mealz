@@ -56,8 +56,13 @@ export const ADD_RECIPE = gql`
 `;
 
 export const ADD_CARD = gql`
-  mutation addCard($name: String!, $date: String!, $meals: [ID]!) {
-    addCard(name: $name, date: $date, meals: $meals) {
+  mutation addCard(
+    $name: String!
+    $date: String!
+    $serving: [Int]!
+    $meals: [ID]!
+  ) {
+    addCard(name: $name, date: $date, serving: $serving, meals: $meals) {
       name
     }
   }
