@@ -48,6 +48,7 @@ function List() {
   }
 
   const { cards } = data?.me || {};
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -59,8 +60,6 @@ function List() {
     const truth = filteredDates.map(date => date.numbers === card.date);
     return truth.includes(true);
   });
-
-  console.log(filteredCards);
 
   const ingreeds = filteredCards.reduce((acc, idv, idx, arr) => {
     idv.meals.forEach((meal, midx) =>
@@ -74,8 +73,6 @@ function List() {
     );
     return acc;
   }, []);
-
-  console.log(ingreeds);
 
   const finalIngreeds = ingreeds.reduce((acc, idv, idx, arr) => {
     const exists = acc.map(acc => acc.name === `${idv.unit} ${idv.name}`);
@@ -97,8 +94,6 @@ function List() {
     }
     return acc;
   }, []);
-
-  console.log(finalIngreeds);
 
   return (
     <Flex w="100%" h="100%" direction="column">
