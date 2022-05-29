@@ -77,13 +77,8 @@ function List() {
   const finalIngreeds = ingreeds.reduce((acc, idv, idx, arr) => {
     const exists = acc.map(acc => acc.name === `${idv.unit} ${idv.name}`);
     if (exists.includes(true)) {
-      const index = acc.reduce((accI, idvI, idxI, arrI) => {
-        if (`${idvI.unit} ${idvI.name}` === `${idv.unit} ${idv.name}`)
-          accI = idxI;
-        return accI;
-      }, '');
-      acc[index].amount =
-        acc.amount[index] +
+      acc[exists.indexOf(true)].amount =
+        acc[exists.indexOf(true)].amount +
         parseInt(idv.amount) * (parseInt(idv.serving) / parseInt(idv.serves));
     } else {
       acc.push({
