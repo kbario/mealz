@@ -264,7 +264,7 @@ function RecipeModal({ rand, isNotPhone }) {
                 <TabPanel id="ingreeds">
                   <Flex direction="column">
                     <Flex>
-                      <Text maxW="5rem" w="20%" textAlign="center" p="0" m="0">
+                      <Text maxW="4rem" w="20%" textAlign="center" p="0" m="0">
                         {isNotPhone ? 'amount' : 'amnt'}
                       </Text>
                       <Text maxW="4rem" w="20%" textAlign="center" p="0" m="0">
@@ -282,145 +282,97 @@ function RecipeModal({ rand, isNotPhone }) {
                       p="1"
                       overflow={'auto'}
                     >
-                      {recipeState.ingredients.length > 1 ? (
-                        recipeState.ingredients.map((ingreed, idx) => {
-                          return (
-                            <Flex key={idx}>
-                              <Input
-                                p={2}
-                                type="number"
-                                name="amount"
-                                maxW="8rem"
-                                w="20%"
-                                minW="3rem"
-                                roundedRight="0"
-                                value={ingreed.amount}
-                                onChange={e => {
-                                  recipeDispatch({
-                                    type: UPDATE_INGREDIENT_AMOUNT,
-                                    payload: {
-                                      value: e.target.value,
-                                      idx: idx,
-                                    },
-                                  });
-                                }}
-                              />
-                              <Input
-                                p={2}
-                                name="unit"
-                                maxW="8rem"
-                                w="20%"
-                                minW="3rem"
-                                rounded="0"
-                                value={ingreed.unit}
-                                onChange={e => {
-                                  recipeDispatch({
-                                    type: UPDATE_INGREDIENT_UNIT,
-                                    payload: {
-                                      value: e.target.value,
-                                      idx: idx,
-                                    },
-                                  });
-                                }}
-                              />
-                              <Input
-                                p={2}
-                                name="ingredient"
-                                flexGrow="1"
-                                rounded="0"
-                                value={ingreed.name}
-                                onChange={e => {
-                                  recipeDispatch({
-                                    type: UPDATE_INGREDIENT_NAME,
-                                    payload: {
-                                      value: e.target.value,
-                                      idx: idx,
-                                    },
-                                  });
-                                }}
-                              />
-                              <Button
-                                w="40px"
-                                p="0"
-                                roundedLeft="0"
-                                onClick={e => {
-                                  recipeDispatch({
-                                    type: REMOVE_INGREDIENT,
-                                    payload: idx,
-                                  });
-                                }}
-                              >
-                                {close}
-                              </Button>
-                            </Flex>
-                          );
-                        })
-                      ) : (
-                        <Flex>
-                          <Input
-                            p={2}
-                            type="number"
-                            name="amount"
-                            w="20%"
-                            roundedRight="0"
-                            placeholder={randomIngreeds[rand].a}
-                            value={recipeState.ingredients[0].amount}
-                            onChange={e =>
-                              recipeDispatch({
-                                type: UPDATE_INGREDIENT_AMOUNT,
-                                payload: { value: e.target.value, idx: 0 },
-                              })
-                            }
-                          />
-                          <Input
-                            p={2}
-                            name="unit"
-                            w="25%"
-                            rounded="0"
-                            placeholder={randomIngreeds[rand].u}
-                            value={recipeState.ingredients[0].unit}
-                            onChange={e =>
-                              recipeDispatch({
-                                type: UPDATE_INGREDIENT_UNIT,
-                                payload: { value: e.target.value, idx: 0 },
-                              })
-                            }
-                          />
-                          <Input
-                            p={2}
-                            name="ingredient"
-                            w="50%"
-                            rounded="0"
-                            placeholder={randomIngreeds[rand].i}
-                            value={recipeState.ingredients[0].name}
-                            onChange={e =>
-                              recipeDispatch({
-                                type: UPDATE_INGREDIENT_NAME,
-                                payload: { value: e.target.value, idx: 0 },
-                              })
-                            }
-                          />
-                          <Button
-                            w="5%"
-                            p="0"
-                            roundedLeft="0"
-                            onClick={e =>
-                              recipeDispatch({
-                                type: SET_INGREDIENT_TO_ZERO,
-                              })
-                            }
-                            isDisabled={
-                              !recipeState.ingredients[0].amount &&
-                              !recipeState.ingredients[0].unit &&
-                              !recipeState.ingredients[0].name
-                                ? true
-                                : false
-                            }
-                          >
-                            {close}
-                          </Button>
-                        </Flex>
-                      )}
+                      {recipeState.ingredients.map((ingreed, idx) => {
+                        return (
+                          <Flex key={idx}>
+                            <Input
+                              p={2}
+                              type="number"
+                              name="amount"
+                              maxW="8rem"
+                              w="25%"
+                              minW="3rem"
+                              roundedRight="0"
+                              placeholder={
+                                idx === 0 ? randomIngreeds[rand].a : ''
+                              }
+                              value={ingreed.amount}
+                              onChange={e => {
+                                recipeDispatch({
+                                  type: UPDATE_INGREDIENT_AMOUNT,
+                                  payload: {
+                                    value: e.target.value,
+                                    idx: idx,
+                                  },
+                                });
+                              }}
+                            />
+                            <Input
+                              p={2}
+                              name="unit"
+                              maxW="8rem"
+                              w="25%"
+                              minW="3rem"
+                              rounded="0"
+                              placeholder={
+                                idx === 0 ? randomIngreeds[rand].u : ''
+                              }
+                              value={ingreed.unit}
+                              onChange={e => {
+                                recipeDispatch({
+                                  type: UPDATE_INGREDIENT_UNIT,
+                                  payload: {
+                                    value: e.target.value,
+                                    idx: idx,
+                                  },
+                                });
+                              }}
+                            />
+                            <Input
+                              p={2}
+                              name="ingredient"
+                              flexGrow="1"
+                              rounded="0"
+                              placeholder={
+                                idx === 0 ? randomIngreeds[rand].i : ''
+                              }
+                              value={ingreed.name}
+                              onChange={e => {
+                                recipeDispatch({
+                                  type: UPDATE_INGREDIENT_NAME,
+                                  payload: {
+                                    value: e.target.value,
+                                    idx: idx,
+                                  },
+                                });
+                              }}
+                            />
+                            <Button
+                              w="40px"
+                              p="0"
+                              roundedLeft="0"
+                              onClick={e => {
+                                recipeDispatch({
+                                  type:
+                                    idx === 0
+                                      ? SET_INGREDIENT_TO_ZERO
+                                      : REMOVE_INGREDIENT,
+                                  payload: idx,
+                                });
+                              }}
+                              isDisabled={
+                                !ingreed.name &&
+                                !ingreed.amount &&
+                                !ingreed.unit
+                                  ? true
+                                  : false
+                              }
+                            >
+                              {close}
+                            </Button>
+                          </Flex>
+                        );
+                      })}
                     </Flex>
                   </Flex>
                   <Flex w="full" p="5" justifyContent="center">
@@ -431,6 +383,19 @@ function RecipeModal({ rand, isNotPhone }) {
                       boxSize="12"
                       p="0"
                       rounded="full"
+                      isDisabled={
+                        recipeState.ingredients[
+                          recipeState.ingredients.length - 1
+                        ].name === '' ||
+                        recipeState.ingredients[
+                          recipeState.ingredients.length - 1
+                        ].unit === '' ||
+                        recipeState.ingredients[
+                          recipeState.ingredients.length - 1
+                        ].amount === ''
+                          ? true
+                          : false
+                      }
                     >
                       {add}
                     </Button>
@@ -439,85 +404,64 @@ function RecipeModal({ rand, isNotPhone }) {
                 <TabPanel id="instructions">
                   <Flex direction="column" maxH="64" overflow={'auto'} p="1">
                     <Flex direction="column" gap="1">
-                      {recipeState.instructions.length > 1 ? (
-                        recipeState.instructions.map((instruct, idx) => {
-                          return (
-                            <Flex key={idx}>
-                              <Input
-                                p={2}
-                                name="amount"
-                                flexGrow="1"
-                                roundedRight="0"
-                                value={instruct}
-                                onChange={e => {
-                                  recipeDispatch({
-                                    type: UPDATE_INSTRUCTION,
-                                    payload: {
-                                      value: e.target.value,
-                                      idx: idx,
-                                    },
-                                  });
-                                }}
-                              />
-                              <Button
-                                w="40px"
-                                p="0"
-                                roundedLeft="0"
-                                onClick={e => {
-                                  recipeDispatch({
-                                    type: REMOVE_INSTRUCTION,
-                                    payload: idx,
-                                  });
-                                }}
-                              >
-                                {close}
-                              </Button>
-                            </Flex>
-                          );
-                        })
-                      ) : (
-                        <Flex>
-                          <Input
-                            p={2}
-                            name="ingredient"
-                            rounded="0"
-                            flexGrow="1"
-                            placeholder={randomInstructions[rand]}
-                            value={recipeState.instructions[0].instruct}
-                            onChange={e =>
-                              recipeDispatch({
-                                type: UPDATE_INSTRUCTION,
-                                payload: { value: e.target.value, idx: 0 },
-                              })
-                            }
-                          />
-                          <Button
-                            w="40px"
-                            p="0"
-                            roundedLeft="0"
-                            onClick={e =>
-                              recipeDispatch({
-                                type: SET_INSTRUCTION_TO_ZERO,
-                              })
-                            }
-                            isDisabled={
-                              !recipeState.instructions[0] ? true : false
-                            }
-                          >
-                            {close}
-                          </Button>
-                        </Flex>
-                      )}
+                      {recipeState.instructions.map((instruct, idx) => {
+                        return (
+                          <Flex key={idx}>
+                            <Input
+                              p={2}
+                              name="amount"
+                              flexGrow="1"
+                              roundedRight="0"
+                              placeholder={
+                                idx === 0 ? randomInstructions[rand] : ''
+                              }
+                              value={instruct}
+                              onChange={e => {
+                                recipeDispatch({
+                                  type: UPDATE_INSTRUCTION,
+                                  payload: {
+                                    value: e.target.value,
+                                    idx: idx,
+                                  },
+                                });
+                              }}
+                            />
+                            <Button
+                              w="40px"
+                              p="0"
+                              roundedLeft="0"
+                              onClick={e => {
+                                recipeDispatch({
+                                  type:
+                                    idx === 0
+                                      ? SET_INSTRUCTION_TO_ZERO
+                                      : REMOVE_INSTRUCTION,
+                                  payload: idx,
+                                });
+                              }}
+                            >
+                              {close}
+                            </Button>
+                          </Flex>
+                        );
+                      })}
                     </Flex>
                   </Flex>
                   <Flex w="full" p="5" justifyContent="center">
                     <Button
-                      onClick={e => {
+                      onClick={() => {
                         recipeDispatch({ type: ADD_INSTRUCTION_INPUT });
                       }}
                       boxSize="12"
                       p="0"
                       rounded="full"
+                      isDisabled={
+                        recipeState.instructions[
+                          recipeState.instructions.length - 1
+                        ] === ''
+                          ? true
+                          : false
+                      }
                     >
                       {add}
                     </Button>

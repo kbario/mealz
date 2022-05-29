@@ -60,7 +60,14 @@ export default function recipeReducer(state, action) {
     case ADD_INGREDIENT_INPUT: {
       return {
         ...state,
-        ingredients: [...state.ingredients, initRecipeState.ingredients],
+        ingredients: [
+          ...state.ingredients,
+          {
+            amount: '',
+            unit: '',
+            name: '',
+          },
+        ],
       };
     }
     case UPDATE_INGREDIENT_AMOUNT: {
@@ -101,13 +108,13 @@ export default function recipeReducer(state, action) {
     case SET_INGREDIENT_TO_ZERO: {
       return {
         ...state,
-        ingredients: initRecipeState.ingredients,
+        ingredients: [{ amount: '', unit: '', name: '' }],
       };
     }
     case ADD_INSTRUCTION_INPUT: {
       return {
         ...state,
-        instructions: [...state.instructions, initRecipeState.instructions[0]],
+        instructions: [...state.instructions, ''],
       };
     }
     case UPDATE_INSTRUCTION: {
@@ -134,7 +141,17 @@ export default function recipeReducer(state, action) {
       };
     }
     case SET_RECIPE_TO_ZERO: {
-      return initRecipeState;
+      return {
+        ...initRecipeState,
+        ingredients: [
+          {
+            amount: '',
+            unit: '',
+            name: '',
+          },
+        ],
+        instructions: [''],
+      };
     }
     default: {
       return state;
