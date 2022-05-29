@@ -2,7 +2,7 @@
   "name": "my-repos",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001",
+  "proxy": "http://fixie:MjkXp8K1xgSZ6gQ@velodrome.usefixie.com:80",
   "dependencies": {
     "@apollo/client": "^3.6.2",
     "@chakra-ui/icons": "^2.0.0",
