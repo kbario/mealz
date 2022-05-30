@@ -54,7 +54,7 @@ function Plan() {
   return (
     <Flex h="full" w="full" direction="column">
       <NavHeader page={'plan'} me={data?.me} />
-      <Flex grow={1} w="full" direction="column" p="6" gap="3">
+      <Flex grow={1} w="full" direction="column" p="6" gap="6">
         <Tabs
           isFitted
           boxShadow="md"

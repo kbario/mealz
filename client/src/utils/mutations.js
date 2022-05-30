@@ -67,10 +67,23 @@ export const ADD_CARD = gql`
     }
   }
 `;
-export const REMOVE_RECIPTE = gql`
+export const REMOVE_RECIPE = gql`
   mutation removeRecipe($_id: ID!) {
     removeRecipe(_id: $_id) {
       name
+      recipes {
+        name
+        ingredients {
+          name
+          amount
+          unit
+        }
+        numberOfIngredients
+        cuisine
+        cookTime
+        from
+        serves
+      }
     }
   }
 `;

@@ -9,8 +9,7 @@ import { useMutation } from '@apollo/client';
 import { REMOVE_CARD } from '../utils/mutations';
 
 export function CardCard({ card }) {
-  const [removeCard, { loading, error }] = useMutation(REMOVE_CARD);
-  console.log(card);
+  const [removeCard] = useMutation(REMOVE_CARD);
   return (
     <Flex p="2" direction="column" rounded="md" boxShadow="md">
       <Flex justify="space-between" align="center">

@@ -147,7 +147,7 @@ function RecipeModal({ rand, isNotPhone }) {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <Flex direction="column" gap="3">
+                  <Flex direction="column" gap="6">
                     <FormControl isRequired>
                       <FormLabel htmlFor="recipeName">name</FormLabel>
                       <Input
@@ -162,7 +162,7 @@ function RecipeModal({ rand, isNotPhone }) {
                         }}
                       />
                     </FormControl>
-                    <Flex gap="5">
+                    <Flex gap="6">
                       <FormControl isRequired>
                         <FormLabel htmlFor="recipeServes">serves</FormLabel>
                         <NumberInput
@@ -402,7 +402,7 @@ function RecipeModal({ rand, isNotPhone }) {
                 </TabPanel>
                 <TabPanel id="instructions">
                   <Flex direction="column" maxH="64" overflow={'auto'} p="1">
-                    <Flex direction="column" gap="1">
+                    <Flex direction="column" gap="6">
                       {recipeState.instructions.map((instruct, idx) => {
                         return (
                           <Flex key={idx}>

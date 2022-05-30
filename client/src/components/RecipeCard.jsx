@@ -1,3 +1,4 @@
+import { useMutation } from '@apollo/client';
 import {
   Flex,
   Heading,
@@ -7,10 +8,13 @@ import {
   Text,
   GridItem,
   Link,
+  CloseButton,
 } from '@chakra-ui/react';
 import { globe, People, clock, bag } from '../icons/icons';
+import { REMOVE_RECIPE } from '../utils/mutations';
 
 function RecipeCard({ recipe }) {
+  const [removeRecipe] = useMutation(REMOVE_RECIPE);
   const {
     _id,
     name,
@@ -34,8 +38,16 @@ function RecipeCard({ recipe }) {
         p="3"
         gap="3"
       >
-        <Heading variant="RecipeCard">{name.toLowerCase()}</Heading>
-        <Flex w="100%" gap="2" wrap="wrap">
+        <Flex justify="space-between" align="center">
+          <Heading variant="RecipeCard">{name.toLowerCase()}</Heading>
+          <CloseButton
+            onClick={async () => {
+              await removeRecipe({ variables: { _id: _id } });
+              window.location.reload();
+            }}
+          />
+        </Flex>
+        <Flex w="100%" gap="1" wrap="wrap">
           <Tag boxShadow="md">
             <TagLeftIcon boxSize="5" as={People} />
             <TagLabel>{serves}</TagLabel>
@@ -57,16 +69,20 @@ function RecipeCard({ recipe }) {
             <TagLabel>{numberOfIngredients}</TagLabel>
           </Tag>
         </Flex>
-        <Text flexGrow="1">{description}</Text>
-        {from && /http/.test(from) ? (
+        <Text flexGrow="1" overflow={'hidden'}>
+          {description}
+        </Text>
+        {from && (
           <Text>
             credit:{' '}
-            <Link href={from} target="_blank">
-              {from}
-            </Link>
+            {/http/.test(from) ? (
+              <Link href={from} target="_blank">
+                Online
+              </Link>
+            ) : (
+              from
+            )}
           </Text>
-        ) : (
-          <Text>credit: {from}</Text>
         )}
       </Flex>
     </GridItem>

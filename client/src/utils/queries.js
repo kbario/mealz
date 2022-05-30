@@ -32,6 +32,7 @@ export const QUERY_ME = gql`
         cookTime
         cuisine
         numberOfIngredients
+        description
       }
       cards {
         _id

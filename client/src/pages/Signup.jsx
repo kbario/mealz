@@ -78,7 +78,7 @@ function Signup() {
     }
   };
   if (Auth.loggedIn()) {
-    return <Navigate to="/home" />;
+    return <Navigate to="/recipes" />;
   }
 
   if (loginLoading || userLoading) {
@@ -110,11 +110,11 @@ function Signup() {
         p="5"
         align="center"
         justify="center"
-        gap="10"
+        gap="6"
       >
         {pageInView === 'login' && (
           <>
-            <Flex direction="column" gap="5">
+            <Flex direction="column" gap="6">
               <Heading>login</Heading>
               <FormControl isInvalid={emailError} isRequired>
                 <FormLabel htmlFor="email">Email</FormLabel>
@@ -162,7 +162,7 @@ function Signup() {
           </>
         )}
         {pageInView === 'signup' && (
-          <Flex direction="column" gap="5">
+          <Flex direction="column" gap="6">
             <Heading>signup</Heading>
             <FormControl isInvalid={nameError} isRequired>
               <FormLabel htmlFor="email">Name</FormLabel>

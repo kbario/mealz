@@ -46,7 +46,7 @@ export function PlanModal({ date, day, recipes, isPhone }) {
           meals: isRecipeIn,
         },
       });
-      <Navigate to={'/plan'} />;
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }
@@ -95,7 +95,7 @@ export function PlanModal({ date, day, recipes, isPhone }) {
                     return (
                       <PlanPopover
                         key={recipe._id}
-                        backgroundColor="brand.blue"
+                        backgroundColor="brand.green"
                         textColor="white"
                         recipe={recipe}
                         isRecipeIn={isRecipeIn}

@@ -39,7 +39,7 @@ function List() {
 
   useEffect(() => {
     setFilteredDates(dates.slice(from, to + 1));
-  }, [from, to, dates]);
+  }, [from, to]);
 
   if (!Auth.loggedIn()) {
     return <Navigate to="/signup" />;
@@ -105,7 +105,7 @@ function List() {
           </CheckboxGroup>
         )}
       </Flex>
-      <Flex gap="5" p="6">
+      <Flex gap="6" p="6" w={['100%', '100%', '75%']} mx="auto">
         <FormControl>
           <FormLabel htmlFor="recipeCuisine">from</FormLabel>
           <Select

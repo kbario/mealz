@@ -42,7 +42,7 @@ export function PlanPopover({
         <Flex>
           <Button
             roundedRight="0"
-            backgroundColor={isChosen ? 'brand.blue' : 'auto'}
+            backgroundColor={isChosen ? 'brand.green' : 'auto'}
             color={isChosen ? 'white' : 'auto'}
           >
             {recipe.name}
@@ -60,7 +60,7 @@ export function PlanPopover({
                   }
             }
             icon={isChosen ? close : add}
-            backgroundColor={isChosen ? 'brand.blue' : 'auto'}
+            backgroundColor={isChosen ? 'brand.green' : 'auto'}
             fill={isChosen ? 'white' : 'auto'}
           />
         </Flex>

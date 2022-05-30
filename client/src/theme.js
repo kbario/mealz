@@ -7,7 +7,7 @@ const config = {
 const colors = {
   brand: {
     dark: '#27272A',
-    blue: '#0369A1',
+    green: '#56A938',
     orange: '#FED7AA',
     light: '#F4F4F5',
   },
@@ -17,7 +17,8 @@ const components = {
   Button: {
     variants: {
       fillBtn: {
-        bg: 'brand.blue',
+        bg: 'brand.green',
+        textColor: 'white',
       },
       outlineBtn: {
         bg: 'brand.light',
@@ -30,7 +31,7 @@ const components = {
         fontSize: 'xl',
       },
       lightHeading: {
-        color: 'brand.blue',
+        color: 'brand.green',
       },
       cardcardHeading: {
         fontSize: 'lg',
@@ -43,6 +44,20 @@ const components = {
       'recipe-card': {
         boxShadow: '0 0 2px 2px #efdfde',
         bg: 'brand.blue',
+      },
+    },
+  },
+  Text: {
+    variants: {
+      navlink: {
+        fontSize: 'xl',
+        fontWeight: 'thin',
+        cursor: 'pointer',
+      },
+      navlinkActive: {
+        fontSize: 'xl',
+        fontWeight: 'normal',
+        borderBottom: '1px black solid',
       },
     },
   },
