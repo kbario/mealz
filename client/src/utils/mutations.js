@@ -67,6 +67,27 @@ export const ADD_CARD = gql`
     }
   }
 `;
+export const REMOVE_RECIPTE = gql`
+  mutation removeRecipe($_id: ID!) {
+    removeRecipe(_id: $_id) {
+      name
+    }
+  }
+`;
+export const REMOVE_CARD = gql`
+  mutation removeCard($_id: ID!) {
+    removeCard(_id: $_id) {
+      name
+      cards {
+        name
+        date
+        meals {
+          name
+        }
+      }
+    }
+  }
+`;
 
 export const REMOVE_SKILL = gql`
   mutation removeSkill($skill: String!) {

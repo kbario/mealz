@@ -44,7 +44,6 @@ function Signup() {
 
   const updateEmailOnFly = e => {
     setEmail(e.target.value);
-    console.log(e.target.value);
     setEmailError(false);
   };
 
@@ -78,6 +77,9 @@ function Signup() {
       console.error(err);
     }
   };
+  if (Auth.loggedIn()) {
+    return <Navigate to="/home" />;
+  }
 
   if (loginLoading || userLoading) {
     return (
@@ -100,6 +102,7 @@ function Signup() {
   return (
     <Flex h="100%" w="100%" direction="column">
       <NavHeader />
+
       <Flex
         grow={1}
         w="100%"
@@ -110,51 +113,53 @@ function Signup() {
         gap="10"
       >
         {pageInView === 'login' && (
-          <Flex direction="column" gap="5">
-            <Heading>login</Heading>
-            <FormControl isInvalid={emailError} isRequired>
-              <FormLabel htmlFor="email">Email</FormLabel>
-              <Input
-                id="email-input"
-                type="email"
-                value={email}
-                onChange={e => updateEmailOnFly(e)}
-                onMouseLeave={() =>
-                  setEmailError(
-                    !/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
-                      email
-                    )
-                  )
-                }
-              />
-              {emailError && (
-                <FormErrorMessage>Email is required.</FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl isInvalid={passwordError} isRequired>
-              <FormLabel htmlFor="password-input">Password</FormLabel>
-              <InputGroup>
+          <>
+            <Flex direction="column" gap="5">
+              <Heading>login</Heading>
+              <FormControl isInvalid={emailError} isRequired>
+                <FormLabel htmlFor="email">Email</FormLabel>
                 <Input
-                  id="password-input"
-                  type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
+                  id="email-input"
+                  type="email"
+                  value={email}
+                  onChange={e => updateEmailOnFly(e)}
+                  onMouseLeave={() =>
+                    setEmailError(
+                      !/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+                        email
+                      )
+                    )
+                  }
                 />
-                <InputRightElement width="4.5rem">
-                  <Button
-                    h="1.75rem"
-                    size="sm"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-              {passwordError && <FormErrorMessage></FormErrorMessage>}
-            </FormControl>
+                {emailError && (
+                  <FormErrorMessage>Email is required.</FormErrorMessage>
+                )}
+              </FormControl>
+              <FormControl isInvalid={passwordError} isRequired>
+                <FormLabel htmlFor="password-input">Password</FormLabel>
+                <InputGroup>
+                  <Input
+                    id="password-input"
+                    type={showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                  />
+                  <InputRightElement width="4.5rem">
+                    <Button
+                      h="1.75rem"
+                      size="sm"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+                {passwordError && <FormErrorMessage></FormErrorMessage>}
+              </FormControl>
 
-            <Button onClick={e => handleLogin(e)}>Login</Button>
-          </Flex>
+              <Button onClick={e => handleLogin(e)}>Login</Button>
+            </Flex>
+          </>
         )}
         {pageInView === 'signup' && (
           <Flex direction="column" gap="5">

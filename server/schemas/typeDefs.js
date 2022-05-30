@@ -72,7 +72,8 @@ const typeDefs = gql`
       cookTime: Int
     ): User
     addCard(name: String!, date: String!, serving: [Int]!, meals: [ID]!): User
-    removeRecipe(recipeId: String!): User
+    removeRecipe(_id: String!): User
+    removeCard(_id: ID!): User
     removeUser: User
 
     #   addSkill(profileId: ID!, skill: String!): Profile

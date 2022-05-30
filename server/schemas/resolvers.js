@@ -103,18 +103,32 @@ const resolvers = {
       }
     },
 
-    removeRecipe: async (parent, { recipeId }, context) => {
+    removeRecipe: async (parent, { _id }, context) => {
       if (context.user) {
-        const recipe = await Recipe.findByIdAndDelete(recipeId);
+        const recipe = await Recipe.findByIdAndDelete(_id);
         if (recipe.ok) {
           return await User.findOneAndUpdate(
             { _id: context.user._id },
-            { $pull: { recipes: recipeId } },
+            { $pull: { recipes: _id } },
             { new: true }
           ).populate(["recipes", "cards"]);
           // .populate({ path: "cards", populate: "meals" });
         } else {
           return Error("Could not delete recipe");
+        }
+      }
+    },
+    removeCard: async (parent, { _id }, context) => {
+      if (context.user) {
+        try {
+          await Card.findByIdAndDelete(_id);
+          return await User.findOneAndUpdate(
+            { _id: context.user._id },
+            { $pull: { cards: _id } },
+            { new: true }
+          ).populate(["recipes", "cards"]);
+        } catch (error) {
+          return Error("Could not delete card");
         }
       }
     },
