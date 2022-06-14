@@ -93,6 +93,9 @@ function List() {
     <Flex w="100%" h="100%" direction="column">
       <NavHeader page={'list'} me={data?.me} />
       <Flex direction="column" flexGrow="1" p="6">
+        {!finalIngreeds && (
+          <Text>You don't have any meals planned or ingreeds to buy :)</Text>
+        )}
         {finalIngreeds && (
           <CheckboxGroup>
             {finalIngreeds.map((ingreeds, idx) => (

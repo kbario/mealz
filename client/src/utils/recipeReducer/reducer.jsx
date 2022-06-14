@@ -10,7 +10,6 @@ import {
   UPDATE_INGREDIENT_UNIT,
   UPDATE_INGREDIENT_NAME,
   REMOVE_INGREDIENT,
-  initRecipeState,
   SET_INGREDIENT_TO_ZERO,
   SET_RECIPE_TO_ZERO,
   ADD_INSTRUCTION_INPUT,
@@ -142,7 +141,9 @@ export default function recipeReducer(state, action) {
     }
     case SET_RECIPE_TO_ZERO: {
       return {
-        ...initRecipeState,
+        name: '',
+        description: '',
+        serves: '',
         ingredients: [
           {
             amount: '',
@@ -151,6 +152,9 @@ export default function recipeReducer(state, action) {
           },
         ],
         instructions: [''],
+        from: '',
+        cuisine: '',
+        cookTime: '',
       };
     }
     default: {

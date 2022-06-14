@@ -26,7 +26,6 @@ function Recipes() {
   if (error) {
     return <div>Error {error.message}</div>;
   }
-  console.log(recipes);
 
   return (
     <Flex w="100%" h="100%" direction="column" gap="6">

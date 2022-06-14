@@ -73,7 +73,6 @@ const resolvers = {
           cuisine,
           cookTime,
         });
-        console.log(recipe);
         return await User.findOneAndUpdate(
           { _id: context.user._id },
           { $addToSet: { recipes: recipe._id } },
@@ -106,14 +105,14 @@ const resolvers = {
     removeRecipe: async (parent, { _id }, context) => {
       if (context.user) {
         const recipe = await Recipe.findByIdAndDelete(_id);
-        if (recipe.ok) {
+        try {
           return await User.findOneAndUpdate(
             { _id: context.user._id },
             { $pull: { recipes: _id } },
             { new: true }
           ).populate(["recipes", "cards"]);
           // .populate({ path: "cards", populate: "meals" });
-        } else {
+        } catch {
           return Error("Could not delete recipe");
         }
       }
