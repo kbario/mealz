@@ -75,7 +75,7 @@ function List() {
       const exists = acc.map(acc => acc.name === `${idv.unit} ${idv.name}`);
       if (exists.includes(true)) {
         acc[exists.indexOf(true)].amount =
-          acc[exists.indexOf(true)].amount +
+          parseInt(acc[exists.indexOf(true)].amount) +
           parseInt(idv.amount) * (parseInt(idv.serving) / parseInt(idv.serves));
       } else {
         acc.push({
