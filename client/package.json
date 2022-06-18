@@ -2,6 +2,7 @@
   "name": "my-repos",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://kbario-mealz.herokuapp.com/",
   "proxy": "http://localhost:3001",
   "dependencies": {
     "@apollo/client": "^3.6.2",
